@@ -1,6 +1,12 @@
 import Foundation
 import SceneKit
 
+public enum Units: String {
+	case inches = "in"
+	case feet = "ft"
+	case meters = "m"
+	case centimeters = "cm"
+}
 
 public class Ruler: SCNNode {
 
@@ -26,8 +32,27 @@ public class Ruler: SCNNode {
 		super.init(coder: aDecoder)
 	}
 
+	/// AR units is meters
 	public var measurement: CGFloat {
 		return capsule.height
+	}
+
+	public func lengthInUnit(_ unit: Units) -> String {
+
+		let value: CGFloat
+		switch unit {
+		case .feet:
+			value = measurement / 0.3048
+		case .inches:
+			value = measurement / 0.0254
+		case .centimeters:
+			value = measurement * 100
+		case .meters:
+			value = measurement
+		}
+
+		// format to one decimal place
+		return "\((value * 10).rounded() / 10.0) \(unit.rawValue)"
 	}
 
 	public func measureTo(_ end: SCNVector3) {
