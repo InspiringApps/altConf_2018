@@ -21,8 +21,8 @@ cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
 cameraNode.look(at: SCNVector3(x: 0, y: 0, z: 0))
 sceneView.scene?.rootNode.addChildNode(cameraNode)
 
-//Demos.Measurement.runwithView(sceneView, mode: .all)
+//Demos.Measurement.runwithView(sceneView, mode: .random)
 
-Demos.Text.runwithView(sceneView, mode: .varyLengthsCentered)
+Demos.Text.runwithView(sceneView, mode: .oneCentered)
 
 PlaygroundPage.current.liveView = sceneView
