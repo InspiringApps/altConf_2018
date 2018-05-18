@@ -3,23 +3,31 @@ import SceneKit
 
 public class ARView: SCNView {
 
-	let containerNode = SCNNode()
-	let rootScene = SCNScene()
+	var startTransform: SCNMatrix4?
+	var rotatableNode: SCNNode?
+	var rotationGesture: NSPanGestureRecognizer?
+	var rotateNode = false {
+		didSet {
+			if rotateNode {
+				backgroundColor = .clear
+				allowsCameraControl = false
+				rotationGesture?.isEnabled = true
+			} else {
+				backgroundColor = .lightGray
+				allowsCameraControl = true
+				rotationGesture?.isEnabled = false
+			}
+		}
+	}
 
-	var startPoint = CGPoint.zero
-	var startTransform = SCNMatrix4Identity
+	let rootScene = SCNScene()
 
 	public override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
 
-		backgroundColor = NSColor.lightGray
-		autoenablesDefaultLighting = false
-//		debugOptions = .showBoundingBoxes
-
-		addGestureRecognizer(NSPanGestureRecognizer(target: self, action: #selector(handleDrag(gesture:))))
-
+		backgroundColor = .lightGray
+		allowsCameraControl = true
 		scene = rootScene
-		scene?.rootNode.addChildNode(containerNode)
 	}
 
 	override init(frame: NSRect, options: [String : Any]? = nil) {
@@ -30,38 +38,63 @@ public class ARView: SCNView {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	public func addNode(_ node: SCNNode) {
-		containerNode.addChildNode(node)
+	public func makeRotatable(_ node: SCNNode) {
+		rotatableNode = node
+
+		if rotationGesture == nil {
+			rotationGesture = NSPanGestureRecognizer(target: self, action: #selector(handleDrag(gesture:)))
+			addGestureRecognizer(rotationGesture ?? NSPanGestureRecognizer() )
+
+			let doubleTap = NSClickGestureRecognizer(target: self, action: #selector(handleDoubleTap(gesture:)))
+			doubleTap.numberOfClicksRequired = 2
+			addGestureRecognizer(doubleTap)
+			rotateNode = true
+		}
 	}
 
 	@objc
 	func handleDrag(gesture: NSPanGestureRecognizer) {
-		switch gesture.state {
-		case .possible:
-			print("gesture possible")
-		case .began:
-			print("gesture began")
-			startPoint = gesture.location(in: self)
-			startTransform = containerNode.transform
-		case .changed:
-			let newPoint = gesture.location(in: self)
-			let deltaX = newPoint.x - startPoint.x
-			let deltaY = newPoint.y - startPoint.y
 
-			let horizontalMovePercentage = deltaX / frame.width
-			let verticalMovePercentage = deltaY / frame.height
-
-			let rotateX = SCNMatrix4Rotate(startTransform, -verticalMovePercentage * .pi, 1, 0, 0)
-			let rotateY = SCNMatrix4Rotate(rotateX, horizontalMovePercentage * .pi, 0, 1, 0)
-			containerNode.transform = rotateY
-		case .ended:
-			print("gesture ended")
-		case .cancelled:
-			print("gesture cancelled")
-		case .failed:
-			print("gesture failed")
+		guard rotateNode, let node = rotatableNode else {
+			return
 		}
 
+		switch gesture.state {
+		case .possible:
+			break
+		case .began:
+			// only allow setup if node is in the scene
+			if rootScene.rootNode.hasChildNode(node) {
+				startTransform = node.transform
+			} else {
+				startTransform = nil
+			}
+		case .changed:
+			// don't attempt to rotate a node that is not in the scene
+			guard let nodeTransform = startTransform else {
+				return
+			}
+
+			let deltaPoint = gesture.translation(in: self)
+			let horizontalMovePercentage = deltaPoint.x / frame.width
+			let verticalMovePercentage = deltaPoint.y / frame.height
+
+			let rotationAroundX = SCNMatrix4Rotate(nodeTransform, -verticalMovePercentage * .pi, 1, 0, 0)
+			let rotationAroundY = SCNMatrix4Rotate(rotationAroundX, horizontalMovePercentage * .pi, 0, 1, 0)
+			node.transform = rotationAroundY
+		case .ended:
+			break
+		case .cancelled:
+			break
+		case .failed:
+			break
+		}
+
+	}
+
+	@objc
+	func handleDoubleTap(gesture: NSClickGestureRecognizer) {
+		rotateNode = !rotateNode
 	}
 
 }
