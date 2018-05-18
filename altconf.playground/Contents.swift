@@ -1,7 +1,6 @@
 //: A Cocoa based Playground to present user interface
 
-//: text node, pivot point, alignment utilities
-// spritekit video & test
+// spritekit video
 // portal w/ altconf logo inside
 // panel to image morph
 // animated people in audience
