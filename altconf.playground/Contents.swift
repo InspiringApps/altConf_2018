@@ -3,6 +3,7 @@
 // spritekit video
 // portal w/ altconf logo inside
 // panel to image morph
+// panel spotlight
 // animated people in audience
 
 import AppKit
@@ -22,6 +23,6 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 
 //Demos.Measurement.runwithView(sceneView, mode: .random)
 
-Demos.Text.runwithView(sceneView, mode: .oneCentered)
+Demos.Text.runwithView(sceneView, mode: .oneTopLeft)
 
 PlaygroundPage.current.liveView = sceneView
