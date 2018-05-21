@@ -8,6 +8,7 @@ extension Demos {
 
 		public enum DemoMode {
 			case oneCentered, oneTopLeft, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle
+			case addBlueMaterial, addSomeGray
 		}
 
 		public static func runwithView(_ sceneView: ARView, mode: DemoMode) {
@@ -19,7 +20,7 @@ extension Demos {
 			let headerHeight: CGFloat = 5
 			var titleTextNode = SCNNode()
 
-			func addNodeForText(_ text: String, withPivotCorner corner: RectCorner, index: Int) {
+			func addNodeForText(_ text: String, withPivotCorner corner: RectCorner, index: Int, materials: [SCNMaterial] = [SCNMaterial.white]) {
 
 				let panelGeometry = SCNBox(width: 20, height: 30, length: 1, chamferRadius: 3)
 				panelGeometry.materials = [SCNMaterial.black]
@@ -39,17 +40,20 @@ extension Demos {
 				titleTextNode.position = SCNVector3(0, floor((panelGeometry.height - headerHeight) / 2), panelGeometry.length / 2 + 0.01)
 				panelNode.addChildNode(titleTextNode)
 
-				let tagText = SCNText(string: text, extrusionDepth: 0.2)
+				let tagText = SCNText(string: text, extrusionDepth: 0.3 * CGFloat(materials.count))	// make text thicker to make extruded surface easier to see
 				tagText.isWrapped = true
 				tagText.containerFrame = CGRect(origin: .zero, size: CGSize(width: placeholderGeometry.width, height: placeholderGeometry.height))
 				tagText.font = NSFont(name: "Helvetica", size: 2)
-				tagText.materials = [SCNMaterial.white]
+				tagText.materials = materials	// order of elements in materials array matter. Refer to documentation for each geometry type
 
 				let tagTextNode = SCNNode(geometry: tagText)
 				tagTextNode.position = SCNVector3(0, 0, 1)
 				panelNode.addChildNode(tagTextNode)
 
-				tagTextNode.alignToPlaceholder(placeholderNode, atCorner: corner, showPivotWithColor: .red)
+				// move text forward to make backside easier to see
+				let hoverDistance = CGFloat(1 + ((materials.count - 1) * 2))
+
+				tagTextNode.alignToPlaceholder(placeholderNode, atCorner: corner, hoverDistance: hoverDistance, showPivotWithColor: .red)
 
 				sceneView.scene?.rootNode.addChildNode(panelNode)
 			}
@@ -78,6 +82,10 @@ extension Demos {
 					titleTextNode.geometry = sphere
 					sceneView.makeRotatable(titleTextNode)
 				}
+			case .addBlueMaterial:
+				addNodeForText(String(text.prefix(150)), withPivotCorner: .allCorners, index: 1, materials: [SCNMaterial.white, SCNMaterial.blue])
+			case .addSomeGray:
+				addNodeForText(String(text.prefix(150)), withPivotCorner: .allCorners, index: 1, materials: [SCNMaterial.white, SCNMaterial.blue, SCNMaterial.gray])
 			}
 		}
 

@@ -76,9 +76,10 @@ extension SCNNode {
 		addChildNode(dotNode)
 	}
 
+	/// change pivot point of a node to a more useful corner. Supports nodes with SCNText, SCNBox, or SCNPlane geometries
 	public func pivotAtCorner(_ corner: RectCorner, showPivotWithColor pivotColor: NSColor? = nil) {
 
-		if let geometry = geometry as? SCNText, let text = geometry.string as? String {
+		if let geometry = self.geometry as? SCNText, let text = geometry.string as? String {
 
 			let textString = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: geometry.font])
 			let containerSize = geometry.containerFrame.size
@@ -97,39 +98,37 @@ extension SCNNode {
 			var textSize = layoutManager.usedRect(for: container).size
 			textSize.height = max(textSize.height, geometry.font.pointSize - geometry.font.descender)	// adjustment for single-line text
 
-			print("\(text): \(textSize), size: \(textString.size())")
-
 			geometry.containerFrame.size = textSize
 
 			switch corner {
 			case .allCorners:
-				pivot = SCNMatrix4MakeTranslation(CGFloat(textSize.width / 2), CGFloat(textSize.height / 2), 0)
+				pivot = SCNMatrix4MakeTranslation(textSize.width / 2, textSize.height / 2, 0)
 			case .topLeft:
-				pivot = SCNMatrix4MakeTranslation(0, CGFloat(textSize.height), 0)
+				pivot = SCNMatrix4MakeTranslation(0, textSize.height, 0)
 			case .topRight:
-				pivot = SCNMatrix4MakeTranslation(CGFloat(textSize.width), CGFloat(textSize.height), 0)
+				pivot = SCNMatrix4MakeTranslation(textSize.width, textSize.height, 0)
 			case .bottomLeft:
-				pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+				pivot = SCNMatrix4Identity
 			case .bottomRight:
-				pivot = SCNMatrix4MakeTranslation(CGFloat(textSize.width), 0, 0)
+				pivot = SCNMatrix4MakeTranslation(textSize.width, 0, 0)
 			default:
 				pivot = SCNMatrix4Identity
 			}
 		}
 
-		if let geometry = geometry as? SCNBox {
+		if let size = sizeOfBoxOrPlane(self.geometry) {
 
 			switch corner {
 			case .allCorners:
 				pivot = SCNMatrix4Identity
 			case .topLeft:
-				pivot = SCNMatrix4MakeTranslation(CGFloat(-geometry.width) / 2, CGFloat(geometry.height) / 2, 0)
+				pivot = SCNMatrix4MakeTranslation(-size.width / 2, size.height / 2, 0)
 			case .topRight:
-				pivot = SCNMatrix4MakeTranslation(CGFloat(geometry.width) / 2, CGFloat(geometry.height) / 2, 0)
+				pivot = SCNMatrix4MakeTranslation(size.width / 2, size.height / 2, 0)
 			case .bottomLeft:
-				pivot = SCNMatrix4MakeTranslation(CGFloat(-geometry.width) / 2, CGFloat(-geometry.height) / 2, 0)
+				pivot = SCNMatrix4MakeTranslation(-size.width / 2, -size.height / 2, 0)
 			case .bottomRight:
-				pivot = SCNMatrix4MakeTranslation(CGFloat(geometry.width) / 2, CGFloat(-geometry.height) / 2, 0)
+				pivot = SCNMatrix4MakeTranslation(size.width / 2, -size.height / 2, 0)
 			default:
 				pivot = SCNMatrix4Identity
 			}
@@ -141,32 +140,15 @@ extension SCNNode {
 
 	}
 
-	private func heightForString(_ string: NSAttributedString, withWidth width: CGFloat) -> CGFloat {
-
-		let size = CGSize(width:width, height:CGFloat.greatestFiniteMagnitude)
-		let container = NSTextContainer(size: size)
-		container.lineFragmentPadding = 0.0
-
-		let layoutManager = NSLayoutManager()
-		layoutManager.addTextContainer(container)
-
-		NSTextStorage(attributedString: string).addLayoutManager(layoutManager)
-
-		layoutManager.glyphRange(forBoundingRect: CGRect(origin: .zero, size: size), in: container)
-
-		return layoutManager.usedRect(for: container).size.height
-	}
-
-
-	/// only supports aligning to placeholder nodes with SCNBox geometries
-	public func alignToPlaceholder(_ placeholderNode: SCNNode, atCorner corner: RectCorner, showPivotWithColor pivotColor: NSColor? = nil) {
-
-		guard let placeholderBox = placeholderNode.geometry as? SCNBox else {
-			fatalError("alignToPlaceholder: placeholder node does not have SCNBox geometry")
-		}
+	/// only supports aligning to placeholder nodes with SCNBox or SCNPlane geometries
+	public func alignToPlaceholder(_ placeholderNode: SCNNode, atCorner corner: RectCorner, hoverDistance: CGFloat = 0, showPivotWithColor pivotColor: NSColor? = nil) {
 
 		guard parent == placeholderNode.parent else {
 			fatalError("alignToPlaceholder: node and placeholder nodes are not siblings")
+		}
+
+		guard let size = sizeOfBoxOrPlane(placeholderNode.geometry) else {
+			fatalError("alignToPlaceholder: placeholder geometry is not an SCNBox or SCNPlane")
 		}
 
 		self.pivotAtCorner(corner, showPivotWithColor: pivotColor)
@@ -174,41 +156,48 @@ extension SCNNode {
 
 		switch corner {
 		case .topLeft:
-			self.position.x -= CGFloat(placeholderBox.width / 2)
-			self.position.y += CGFloat(placeholderBox.height / 2)
+			self.position.x -= CGFloat(size.width / 2)
+			self.position.y += CGFloat(size.height / 2)
 		case .topRight:
-			self.position.x += CGFloat(placeholderBox.width / 2)
-			self.position.y += CGFloat(placeholderBox.height / 2)
+			self.position.x += CGFloat(size.width / 2)
+			self.position.y += CGFloat(size.height / 2)
 		case .bottomLeft:
-			self.position.x -= CGFloat(placeholderBox.width / 2)
-			self.position.y -= CGFloat(placeholderBox.height / 2)
+			self.position.x -= CGFloat(size.width / 2)
+			self.position.y -= CGFloat(size.height / 2)
 		case .bottomRight:
-			self.position.x += CGFloat(placeholderBox.width / 2)
-			self.position.y -= CGFloat(placeholderBox.height / 2)
+			self.position.x += CGFloat(size.width / 2)
+			self.position.y -= CGFloat(size.height / 2)
 		default:
 			break
 		}
 
-		self.position.z += placeholderBox.length
+		self.position.z += size.depth + hoverDistance
 	}
 
 	public func showAxes() {
-		addLetter(letter: "o", to: self, at: SCNVector3(0, 0, 0))
-		addLetter(letter: "X", to: self, at: SCNVector3(1, 0, 0))
-		addLetter(letter: "Y", to: self, at: SCNVector3(0, 1, 0))
-		addLetter(letter: "Z", to: self, at: SCNVector3(0, 0, 1))
+		addLetter("o", to: self, at: SCNVector3(0, 0, 0))
+		addLetter("X", to: self, at: SCNVector3(1, 0, 0))
+		addLetter("Y", to: self, at: SCNVector3(0, 1, 0))
+		addLetter("Z", to: self, at: SCNVector3(0, 0, 1))
 	}
 
-	func addLetter(letter: String, to: SCNNode, at: SCNVector3) {
-		let blackMaterial = SCNMaterial()
-		blackMaterial.diffuse.contents = NSColor.black
+	func addLetter(_ letter: String, to: SCNNode, at: SCNVector3) {
+		let character = SCNText(string: letter, extrusionDepth: 1)
+		character.materials = [SCNMaterial.black]
+		let letterNode = SCNNode(geometry: character)
+		letterNode.scale = SCNVector3(0.01, 0.01, 0.01)
+		letterNode.position = at
+		to.addChildNode(letterNode)
+	}
 
-		let x = SCNText(string: letter, extrusionDepth: 1)
-		x.materials = [blackMaterial]
-		let xNode = SCNNode(geometry: x)
-		xNode.scale = SCNVector3(0.01, 0.01, 0.01)
-		xNode.position = at
-		to.addChildNode(xNode)
+	private func sizeOfBoxOrPlane(_ geometry: SCNGeometry?) -> (width: CGFloat, height: CGFloat, depth: CGFloat)? {
+		if let box = geometry as? SCNBox {
+			return (box.width, box.height, box.length)
+		} else if let plane = geometry as? SCNPlane {
+			return (plane.width, plane.height, 0)
+		} else {
+			return nil
+		}
 	}
 
 
