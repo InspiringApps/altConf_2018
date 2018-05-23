@@ -27,6 +27,4 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 
 Demos.Images.runwithView(sceneView, mode: .single)
 
-
-
 PlaygroundPage.current.liveView = sceneView
