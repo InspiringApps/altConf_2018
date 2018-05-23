@@ -23,6 +23,8 @@ public class ARView: SCNView {
 	let rootScene = SCNScene()
 
 	public override init(frame frameRect: NSRect) {
+		LogFunc()
+
 		super.init(frame: frameRect)
 
 		backgroundColor = .lightGray
@@ -39,6 +41,8 @@ public class ARView: SCNView {
 	}
 
 	public func makeRotatable(_ node: SCNNode) {
+		LogFunc()
+
 		rotatableNode = node
 
 		if rotationGesture == nil {
@@ -63,6 +67,7 @@ public class ARView: SCNView {
 		case .possible:
 			break
 		case .began:
+			LogFunc("began")
 			// only allow setup if node is in the scene
 			if rootScene.rootNode.hasChildNode(node) {
 				startTransform = node.transform
@@ -83,7 +88,7 @@ public class ARView: SCNView {
 			let rotationAroundY = SCNMatrix4Rotate(rotationAroundX, horizontalMovePercentage * .pi, 0, 1, 0)
 			node.transform = rotationAroundY
 		case .ended:
-			break
+			LogFunc("ended")
 		case .cancelled:
 			break
 		case .failed:
@@ -94,6 +99,7 @@ public class ARView: SCNView {
 
 	@objc
 	func handleDoubleTap(gesture: NSClickGestureRecognizer) {
+		LogFunc()
 		rotateNode = !rotateNode
 	}
 
