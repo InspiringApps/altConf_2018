@@ -23,6 +23,10 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 
 //Demos.Measurement.runwithView(sceneView, mode: .random)
 
-Demos.Text.runwithView(sceneView, mode: .oneTopLeft)
+//Demos.Text.runwithView(sceneView, mode: .addSomeGray)
+
+Demos.Images.runwithView(sceneView, mode: .single)
+
+
 
 PlaygroundPage.current.liveView = sceneView

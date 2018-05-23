@@ -1,7 +1,7 @@
 import Foundation
 import SceneKit
 
-class ImageNode: SCNNode {
+public class ImageNode: SCNNode {
 
 	var panelIndex = 0
 	var panelTitle = ""
@@ -12,19 +12,16 @@ class ImageNode: SCNNode {
 	var originalPanelGeometry = SCNBox()
 	var originalImageGeometry = SCNPlane()
 
-	init(title: String, index: Int, fromSceneNamed sceneName: String) {
+	var contentImage: Image?
 
-		var fullName = sceneName
-		if !sceneName.hasSuffix(".scn") {
-			fullName = sceneName.appending(".scn")
-		}
+	public init(title: String, image: Image?, index: Int) {
 
-		guard let scene = SCNScene(named: fullName),
+		guard let scene = SCNScene(named: "ImagePanel.scn"),
 			let containerNode = scene.rootNode.childNode(withName: "container", recursively: true),
 			let topNode = containerNode.childNode(withName: "header", recursively: true),
 			let backingNode = containerNode.childNode(withName: "panel", recursively: true),
 			let contentNode = containerNode.childNode(withName: "content", recursively: true),
-			let panelGeometry = panelNode.geometry as? SCNBox,
+			let panelGeometry = backingNode.geometry as? SCNBox,
 			let imageGeometry = contentNode.geometry as? SCNPlane
 			else {
 				fatalError("could not load root panel node and subnodes")
@@ -40,18 +37,24 @@ class ImageNode: SCNNode {
 		originalPanelGeometry = panelGeometry
 		originalImageGeometry = imageGeometry
 
+		contentImage = image
+
 		super.init()
 
 		containerNode.childNodes.forEach({
 			self.addChildNode($0)
 		})
+
+		let imageMaterial = SCNMaterial()
+		imageMaterial.diffuse.contents = image
+		imageGeometry.materials = [imageMaterial]
 	}
 
-	required init?(coder aDecoder: NSCoder) {
+	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 
-	func restoreGeometry() {
+	public func restoreGeometry() {
 		panelNode.geometry = originalPanelGeometry
 		imageNode.geometry = originalImageGeometry
 	}

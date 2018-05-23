@@ -2,7 +2,9 @@ import Foundation
 import SceneKit
 
 #if os(OSX)
-	public enum NSRectCorner { case allCorners, topLeft, topRight, bottomLeft, bottomRight, other	}
+	// case "other" is to silence warning about an unreachable default: case in switch statement
+	// default: case is required because UIRectCorner is not actually an enum (it's an OptionSet)
+	public enum NSRectCorner { case allCorners, topLeft, topRight, bottomLeft, bottomRight, other }
 	public typealias RectCorner = NSRectCorner
 #else
 	public typealias RectCorner = UIRectCorner
