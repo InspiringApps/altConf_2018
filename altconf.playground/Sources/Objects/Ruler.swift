@@ -16,6 +16,8 @@ public class Ruler: SCNNode {
 	private var endPoint = SCNVector3Zero
 
 	public init(startPosition: SCNVector3, material: SCNMaterial, radius: CGFloat = 0.15) {
+		LogFunc()
+
 		super.init()
 		startPoint = startPosition
 		capsule.capRadius = radius
@@ -56,6 +58,8 @@ public class Ruler: SCNNode {
 	}
 
 	public func measureTo(_ end: SCNVector3) {
+		LogFunc()
+
 		endPoint = end
 		let deltaVector = SCNVector3(endPoint.x - startPoint.x, endPoint.y - startPoint.y, endPoint.z - startPoint.z)
 		let distance = deltaVector.length()

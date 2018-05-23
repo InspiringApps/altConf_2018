@@ -7,6 +7,8 @@ public class PictureNode: SCNNode {
 	private let pane = SCNPlane()
 
 	public init(at placement: SCNVector3) {
+		LogFunc()
+
 		super.init()
 
 		let photo = #imageLiteral(resourceName: "landscape1.jpg")
@@ -31,6 +33,8 @@ public class PictureNode: SCNNode {
 	}
 
 	public func followRuler(_ ruler: Ruler) {
+		LogFunc()
+
 		pane.width = ruler.measurement
 		pivot = SCNMatrix4Translate(SCNMatrix4Identity, CGFloat(-pane.width / 2), CGFloat(-pane.height / 2), 0)
 

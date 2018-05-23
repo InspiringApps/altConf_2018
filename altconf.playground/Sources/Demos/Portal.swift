@@ -11,6 +11,7 @@ extension Demos {
 		}
 
 		public static func runwithView(_ sceneView: ARView, mode: DemoMode) {
+			LogFunc()
 
 			sceneView.scene?.rootNode.addChildNode(SCNNode())
 
