@@ -12,11 +12,10 @@ extension Demos {
 		}
 
 		public static func runwithView(_ sceneView: ARView, mode: DemoMode) {
+			LogFunc()
 
 			let text = "AltConf is a community-driven event, assembled to serve developers and a product driven community. Held in downtown San Jose at the San Jose Marriott with 900 seats spread over 2 theatres. AltConf is an annual event timed alongside Apple‘s WWDC, June 4-7, 2018."
 
-			let panelScale: CGFloat = 0.2
-			let nodeScale = SCNVector3(panelScale, panelScale, panelScale)
 			let headerHeight: CGFloat = 5
 			var titleTextNode = SCNNode()
 
@@ -36,7 +35,7 @@ extension Demos {
 				placeholderNode.position = SCNVector3(0, -headerHeight / 2, 0.05)
 				panelNode.addChildNode(placeholderNode)
 
-				titleTextNode = labelNodeForText("AltConf 2018", withSize: CGSize(width: panelGeometry.width, height: headerHeight), atScale: panelScale)
+				titleTextNode = labelNodeForText("AltConf 2018", withSize: CGSize(width: panelGeometry.width, height: headerHeight))
 				titleTextNode.position = SCNVector3(0, floor((panelGeometry.height - headerHeight) / 2), panelGeometry.length / 2 + 0.01)
 				panelNode.addChildNode(titleTextNode)
 
@@ -89,10 +88,11 @@ extension Demos {
 			}
 		}
 
-		static func labelNodeForText(_ text: String, withSize contentSize: CGSize, atScale scale: CGFloat) -> SCNNode {
+		public static func labelNodeForText(_ text: String, withSize contentSize: CGSize) -> SCNNode {
+			LogFunc()
 
-			let scaleMultipler: CGFloat = 2		// for shaprer text rendering
-			let sceneSize = contentSize.applying(CGAffineTransform(scaleX: scaleMultipler / scale, y: scaleMultipler / scale))
+			let scale: CGFloat = 10		// for shaprer text rendering
+			let sceneSize = contentSize.applying(CGAffineTransform(scaleX: scale, y: scale))
 			let sceneFrame = CGRect(origin: .zero, size: sceneSize).integral
 
 			let skScene = SKScene(size: sceneFrame.size)
@@ -106,7 +106,7 @@ extension Demos {
 			label.horizontalAlignmentMode = .center
 			label.verticalAlignmentMode = .center
 			label.numberOfLines = 0
-			label.preferredMaxLayoutWidth = contentSize.width * scaleMultipler / scale
+			label.preferredMaxLayoutWidth = contentSize.width * scale
 			label.position = CGPoint(x: floor(sceneSize.width / 2), y: floor(sceneSize.height / 2))
 			skScene.addChild(label)
 
