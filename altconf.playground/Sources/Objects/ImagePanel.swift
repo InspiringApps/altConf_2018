@@ -15,6 +15,8 @@ public class ImagePanel: SCNNode {
 
 	public var originalPanelGeometry = SCNBox()
 	public var originalImageGeometry = SCNPlane()
+	public var originalImageNodeScale = SCNVector3()
+	public var originalImageNodePosition = SCNVector3()
 
 	public var contentImage: Image?
 
@@ -46,6 +48,8 @@ public class ImagePanel: SCNNode {
 
 		originalPanelGeometry = panelGeometry
 		originalImageGeometry = imageGeometry
+		originalImageNodeScale = imageNode.scale
+		originalImageNodePosition = imageNode.position
 
 		contentImage = image
 
@@ -102,6 +106,9 @@ public class ImagePanel: SCNNode {
 		LogFunc()
 		panelNode.geometry = originalPanelGeometry
 		imageNode.geometry = originalImageGeometry
+		imageNode.scale = originalImageNodeScale
+		imageNode.position = originalImageNodePosition
+		imageNode.eulerAngles.y = 0
 	}
 
 

@@ -42,6 +42,20 @@ extension SCNNode {
 		}
 	}
 
+	/// animates rotation around Y axis by specified radians
+	public func animateRotationByRadians(_ angle: CGFloat, withDuration duration: TimeInterval, completion: (() -> Void)? = nil) {
+		let animation = CABasicAnimation(keyPath: "eulerAngles.y")
+		animation.fromValue = self.eulerAngles.y
+		animation.byValue = angle
+		animation.duration = duration
+		self.addAnimation(animation, forKey: "node rotate")
+		self.eulerAngles.y += angle
+
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration) {
+			completion?()
+		}
+	}
+
 	public func animateToScale(_ scale: SCNVector3, withDuration duration: TimeInterval, completion: (() -> Void)? = nil) {
 		let animation = CABasicAnimation(keyPath: "scale")
 		animation.fromValue = self.scale

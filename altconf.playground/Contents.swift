@@ -28,13 +28,26 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 //let imageDemo = Demos.Images()
 //imageDemo.runwithView(sceneView, mode: .many)
 
-let originalPosition = SCNVector3(0, 0, -10)
+func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
+	let radiansFromCenter = degrees * (.pi / 180.0)
+	let x: CGFloat = sin(radiansFromCenter) * radius
+	let z: CGFloat = cos(radiansFromCenter) * radius
+	return SCNVector3(x + xOffset, yOffset, -z)
+}
+
+
+
+let originalPosition = positionForDegreesFromCenter(25, atRadius: 10)
+let originalRotation: CGFloat = -25 * (.pi / 180.0)
+
 let image = Image.withName("landscape1.jpg")
 let imagePanel = ImagePanel(title: "Testing Stuff", image: image, index: 0)
 imagePanel.position = originalPosition
+imagePanel.eulerAngles.y = originalRotation
 sceneView.scene?.rootNode.addChildNode(imagePanel)
 
 var originalImageNodeScale = imagePanel.imageNode.scale
+var originalImageNodePosition = imagePanel.imageNode.position
 
 let baseNodeScale: CGFloat = 0.02
 let panelAnimationDuration = 1.0
@@ -77,7 +90,9 @@ func clickPanel() {
 			imagePanel.imageNode.animateToScale(SCNVector3Make(1, 1, 1), withDuration: panelAnimationDuration)
 
 			// since node is now rotated 90 deg, moving along -x axis brings it closer
-			imagePanel.imageNode.animateToPosition(SCNVector3(-25, 0, 0), withDuration: panelAnimationDuration)
+			imagePanel.imageNode.animateToPosition(SCNVector3(-25, 0, 0), withDuration: panelAnimationDuration, completion: {
+				movePanelBack()
+			})
 		})
 	}
 }
@@ -85,23 +100,20 @@ func clickPanel() {
 func movePanelBack() {
 	LogFunc()
 
-	let panelDegrees: CGFloat = 0
-
-	imagePanel.animateToPosition(originalPosition, withDuration: panelAnimationDuration)
-
-	imagePanel.animateToRotationRadians(imagePanel.eulerAngles.y - .pi / 2, withDuration: panelAnimationDuration, completion: {
-		imagePanel.imageNode.scale = originalImageNodeScale
-		imagePanel.restoreGeometry()
-		imagePanel.animateToRotationRadians(-panelDegrees * (.pi / 180.0), withDuration: panelAnimationDuration)
+	imagePanel.imageNode.animateRotationByRadians(.pi / 4, withDuration: panelAnimationDuration)
+	imagePanel.imageNode.animateToPosition(originalImageNodePosition, withDuration: panelAnimationDuration)
+	// scale along z faster to keep cylinder close to panel node
+	imagePanel.imageNode.animateToScale(SCNVector3(0.2, 0.2, 0.05), withDuration: panelAnimationDuration, completion: {
+		imagePanel.imageNode.animateToScale(SCNVector3(0.05, 0.05, 0.01), withDuration: panelAnimationDuration)
+		imagePanel.animateRotationByRadians(.pi / 2, withDuration: panelAnimationDuration / 2, completion: {
+			imagePanel.restoreGeometry()
+			imagePanel.imageNode.scale = originalImageNodeScale
+			imagePanel.imageNode.eulerAngles.y = 0
+			imagePanel.animateRotationByRadians(.pi, withDuration: panelAnimationDuration)
+		})
 	})
-
 }
 
-
 clickPanel()
-
-//let clickGesture = NSClickGestureRecognizer(target: t, action: #selector(t.clickPanel()))
-//sceneView.addGestureRecognizer(clickGesture)
-
 
 PlaygroundPage.current.liveView = sceneView
