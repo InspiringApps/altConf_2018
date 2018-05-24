@@ -25,8 +25,8 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 
 //Demos.Text.runwithView(sceneView, mode: .addSomeGray)
 
-//let imageDemo = Demos.Images()
-//imageDemo.runwithView(sceneView, mode: .many)
+let imageDemo = Demos.Images()
+imageDemo.runwithView(sceneView, mode: .many)
 
 func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
 	let radiansFromCenter = degrees * (.pi / 180.0)
@@ -35,8 +35,6 @@ func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, 
 	return SCNVector3(x + xOffset, yOffset, -z)
 }
 
-
-
 let originalPosition = positionForDegreesFromCenter(25, atRadius: 10)
 let originalRotation: CGFloat = -25 * (.pi / 180.0)
 
@@ -44,7 +42,7 @@ let image = Image.withName("landscape1.jpg")
 let imagePanel = ImagePanel(title: "Testing Stuff", image: image, index: 0)
 imagePanel.position = originalPosition
 imagePanel.eulerAngles.y = originalRotation
-sceneView.scene?.rootNode.addChildNode(imagePanel)
+//sceneView.scene?.rootNode.addChildNode(imagePanel)
 
 var originalImageNodeScale = imagePanel.imageNode.scale
 var originalImageNodePosition = imagePanel.imageNode.position
@@ -114,6 +112,6 @@ func movePanelBack() {
 	})
 }
 
-clickPanel()
+//clickPanel()
 
 PlaygroundPage.current.liveView = sceneView

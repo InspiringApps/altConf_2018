@@ -145,11 +145,11 @@ public extension Demos {
 					panel.imageNode.geometry = cylinder
 					panel.imageNode.eulerAngles.y = -.pi
 
-					panel.imageNode.animateToRotationRadians(-135 * .pi / 180, withDuration: self.panelAnimationDuration)
+					panel.imageNode.animateToRotationRadians(-135 * .pi / 180, withDuration: self.panelAnimationDuration / 2)
 					panel.imageNode.animateToScale(SCNVector3Make(1, 1, 1), withDuration: self.panelAnimationDuration)
 
 					// since node is now rotated 90 deg, moving along -x axis brings it closer to camera
-					panel.imageNode.animateToPosition(SCNVector3(-10, 0, 0), withDuration: self.panelAnimationDuration)
+					panel.imageNode.animateToPosition(SCNVector3(-12, 0, 0), withDuration: self.panelAnimationDuration / 2)
 				})
 			}
 		}
@@ -168,7 +168,7 @@ public extension Demos {
 				panel.imageNode.animateToScale(SCNVector3(0.05, 0.05, 0.01), withDuration: self.panelAnimationDuration)
 				panel.animateRotationByRadians(.pi / 2, withDuration: self.panelAnimationDuration / 2, completion: {
 					panel.restoreGeometry()
-					panel.animateRotationByRadians(.pi, withDuration: self.panelAnimationDuration)
+					panel.animateRotationByRadians(.pi / 2, withDuration: self.panelAnimationDuration)
 				})
 			})
 
