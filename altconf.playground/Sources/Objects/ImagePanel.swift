@@ -11,12 +11,12 @@ public class ImagePanel: SCNNode {
 	var panelTitle = ""
 	var headerNode = SCNNode()
 	var panelNode = SCNNode()
-	var imageNode = SCNNode()
+	public var imageNode = SCNNode()
 
-	var originalPanelGeometry = SCNBox()
-	var originalImageGeometry = SCNPlane()
+	public var originalPanelGeometry = SCNBox()
+	public var originalImageGeometry = SCNPlane()
 
-	var contentImage: Image?
+	public var contentImage: Image?
 
 	override init() {
 		super.init()

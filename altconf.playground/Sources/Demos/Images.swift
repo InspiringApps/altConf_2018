@@ -5,48 +5,29 @@ import Foundation
 import SceneKit
 import SpriteKit
 
-#if os(OSX)
+public extension Demos {
 
-public typealias Image = NSImage
-extension Image {
-	public static func withName(_ name: String) -> NSImage? {
-		return NSImage(named: NSImage.Name(name))
-	}
-}
-
-#else
-
-public typealias Image = UIImage
-extension Image {
-	public static func withName(_ name: String) -> UIImage? {
-		return UIImage(named: name)
-	}
-}
-
-#endif
-
-extension Demos {
-
-	public struct Images {
+	public class Images {
 
 		public enum DemoMode {
 			case single, many
 		}
 
-		var currentPanel: ImagePanel?
 		let panelAnimationDuration = 1.0
+		let baseNodeScale: CGFloat = 0.02
+
+		var currentPanel: ImagePanel?
+		var panelBaseRadius: CGFloat = 1.0
+		var panelMidPoint: CGFloat = 0
+		var panelSpacingDegrees: CGFloat = 0
 		var clickGesture: NSClickGestureRecognizer?
-		var tappableNodes: [SCNNode]? {
-			didSet {
-				if tappableNodes != nil, clickGesture == nil {
-					clickGesture = NSClickGestureRecognizer(target: self, action: #selector(handleClick(gesture:)))
-					addGestureRecognizer(clickGesture ?? NSClickGestureRecognizer() )
-				}
-			}
+		var demoSceneView: ARView?
+
+		public init() {
+			LogFunc()
 		}
 
-		
-		public static func runwithView(_ sceneView: ARView, mode: DemoMode) {
+		public func runwithView(_ sceneView: ARView, mode: DemoMode) {
 			LogFunc()
 
 			let imageMap = [
@@ -58,9 +39,10 @@ extension Demos {
 			]
 
 			let minimumPanelRadius: CGFloat = 1.0
-			let panelBaseRadius: CGFloat = max(minimumPanelRadius, CGFloat(imageMap.count) * 0.8)
-			let panelSpacingDegrees: CGFloat = 180.0 / CGFloat(imageMap.count) + 10
-			let panelMidPoint: CGFloat = 0.5 * CGFloat(imageMap.count - 1)
+
+			panelSpacingDegrees = 180.0 / CGFloat(imageMap.count) + 10
+			panelMidPoint = 0.5 * CGFloat(imageMap.count - 1)
+			panelBaseRadius = max(minimumPanelRadius, CGFloat(imageMap.count) * 0.8)
 
 			switch mode {
 			case .single:
@@ -93,7 +75,7 @@ extension Demos {
 				nameTextNode.geometry = nameText
 				nameTextNode.pivotAtCorner(.allCorners)
 				nameTextNode.position = positionForDegreesFromCenter(0, atRadius: 3, yOffset: -2)
-				nameTextNode.scale = SCNVector3(0.02, 0.02, 0.02)
+				nameTextNode.scale = SCNVector3(baseNodeScale, baseNodeScale, baseNodeScale)
 				nameTextNode.eulerAngles.x = -45 * (.pi / 180)
 
 				sceneView.scene?.rootNode.addChildNode(nameTextNode)
@@ -106,22 +88,34 @@ extension Demos {
 				descriptionTextNode.geometry = descriptionText
 				descriptionTextNode.pivotAtCorner(.allCorners)
 				descriptionTextNode.position = positionForDegreesFromCenter(0, atRadius: 2.8, yOffset: -2.5)
-				descriptionTextNode.scale = SCNVector3(0.02, 0.02, 0.02)
+				descriptionTextNode.scale = SCNVector3(baseNodeScale, baseNodeScale, baseNodeScale)
 				descriptionTextNode.eulerAngles.x = -45 * (.pi / 180)
 
 				sceneView.scene?.rootNode.addChildNode(descriptionTextNode)
 
+				demoSceneView = sceneView
+				if clickGesture == nil {
+					clickGesture = NSClickGestureRecognizer(target: sceneView, action: #selector(sceneView.handleClick(gesture:)))
+					sceneView.addGestureRecognizer(clickGesture ?? NSClickGestureRecognizer() )
+
+					sceneView.clickAction = { (anyNode) in
+						if let panel = anyNode as? ImagePanel {
+							self.clickPanel(panel)
+						}
+					}
+				}
+
 			}
 		}
 
-		static func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
+		func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
 			let radiansFromCenter = degrees * (.pi / 180.0)
 			let x: CGFloat = sin(radiansFromCenter) * radius
 			let z: CGFloat = cos(radiansFromCenter) * radius
 			return SCNVector3(x + xOffset, yOffset, -z)
 		}
 
-		static func positionForRadiansFromCenter(_ radians: Float, atRadius radius: CGFloat, yOffset: Float = 0) -> SCNVector3 {
+		func positionForRadiansFromCenter(_ radians: Float, atRadius radius: CGFloat, yOffset: Float = 0) -> SCNVector3 {
 			let degrees = CGFloat(-radians * 180 / .pi)
 			return positionForDegreesFromCenter(degrees, atRadius: radius, yOffset:CGFloat(yOffset))
 		}
@@ -131,23 +125,28 @@ extension Demos {
 
 			moveCurrentPanelBack()
 
-			if let panel = tappedPanel, let currentFrame = sceneView.session.currentFrame {
-
-				if panel == currentPanel {
-					currentPanel = nil
-					return
-				}
-
-				let cameraAngle = currentFrame.camera.eulerAngles.y
-
-				createFullImageNodeFromPanel(panel, withCameraAngle: cameraAngle)
-
+			if let image = panel.contentImage {
 				currentPanel = panel
-			} else {
-				currentPanel = nil
+
+				let image2 = image.doubleWidth()
+
+				let imageMaterial = SCNMaterial()
+				imageMaterial.diffuse.contents = image2
+				imageMaterial.isDoubleSided = true
+
+				let cylinderRadius: CGFloat = image.size.width * baseNodeScale * 2
+				let cylinder = SCNCylinder(radius: cylinderRadius, height: image.size.height * baseNodeScale)
+				cylinder.materials = [imageMaterial, SCNMaterial.clear, SCNMaterial.clear]
+
+				let initialScale = (panel.originalPanelGeometry.height / cylinder.height) * baseNodeScale
+				panel.animateToRotationRadians(panel.eulerAngles.y + .pi / 2, withDuration: panelAnimationDuration / 2, completion: {
+					panel.scale = SCNVector3(initialScale, initialScale, initialScale)
+					panel.imageNode.geometry = cylinder
+					panel.animateToRotationRadians(.pi, withDuration: self.panelAnimationDuration)
+					panel.animateToScale(SCNVector3Make(1, 1, 1), withDuration: self.panelAnimationDuration)
+					panel.animateToPosition(SCNVector3(0, 0, 0), withDuration: self.panelAnimationDuration)
+				})
 			}
-
-
 		}
 
 		func moveCurrentPanelBack() {
@@ -162,57 +161,11 @@ extension Demos {
 			panel.animateToPosition(positionForDegreesFromCenter(panelDegrees, atRadius: panelBaseRadius), withDuration: panelAnimationDuration)
 
 			panel.animateToRotationRadians(panel.eulerAngles.y - .pi / 2, withDuration: self.panelAnimationDuration, completion: {
-				panel.scale = self.nodeScale
+//				panel.scale = SCNVector3(self.baseNodeScale, self.baseNodeScale, self.baseNodeScale)
 				panel.restoreGeometry()
-				panel.animateToRotationRadians(Float(-panelDegrees * (.pi / 180.0)), withDuration: self.panelAnimationDuration)
+				panel.animateToRotationRadians(-panelDegrees * (.pi / 180.0), withDuration: self.panelAnimationDuration)
 			})
 
-		}
-
-		func createFullImageNodeFromPanel(_ panel: ImagePanel, withCameraAngle cameraAngle: Float) {
-			LogFunc()
-			if let image = panel.geometry?.firstMaterial?.diffuse.contents as? Image {
-				let image2 = doubleWidth(image: image)
-
-				let imageMaterial = SCNMaterial()
-				imageMaterial.diffuse.contents = image2
-				imageMaterial.isDoubleSided = true
-
-				let cylinderRadius: CGFloat = image.size.width * scale * 2
-				let cylinder = SCNCylinder(radius: cylinderRadius, height: image.size.height * scale)
-				cylinder.materials = [imageMaterial, SCNMaterial.black, SCNMaterial.black]
-
-				let initialScale = (panel.panelGeometry.height / cylinder.height) * scale
-
-				panel.animateToRotationRadians(panel.eulerAngles.y + .pi / 2, withDuration: panelAnimationDuration / 2, completion: {
-					panel.scale = SCNVector3(initialScale, initialScale, initialScale)
-					panel.geometry = cylinder
-					panel.animateToRotationRadians(cameraAngle + .pi, withDuration: self.panelAnimationDuration)
-					panel.animateToScale(SCNVector3Make(1, 1, 1), withDuration: self.panelAnimationDuration)
-					panel.animateToPosition(SCNVector3(0, 0, 0), withDuration: self.panelAnimationDuration)
-				})
-			}
-		}
-
-		func doubleWidth(image: Image) -> Image {
-
-			let size = image.size
-			let newSize = CGSize(width: size.width * 2, height: size.height)
-
-			UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-			let context = UIGraphicsGetCurrentContext()!
-			context.translateBy(x: size.width, y: 0)
-			context.scaleBy(x: -image.scale, y: 1)
-
-			image.draw(in: CGRect(origin: CGPoint(x: -size.width / 2, y: 0), size: size))
-
-			if let scaledImage = UIGraphicsGetImageFromCurrentImageContext() {
-				UIGraphicsEndImageContext()
-				return scaledImage
-			} else {
-				UIGraphicsEndImageContext()
-				return UIImage()
-			}
 		}
 
 		func degreesFromCenterForPanelIndex(_ index: Int) -> CGFloat {

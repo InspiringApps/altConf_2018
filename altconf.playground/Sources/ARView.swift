@@ -6,6 +6,8 @@ import SceneKit
 
 public class ARView: SCNView {
 
+	public var clickAction: ((Any) -> Void)?
+
 	var startTransform: SCNMatrix4?
 	var rotatableNode: SCNNode?
 	var rotationGesture: NSPanGestureRecognizer?
@@ -105,14 +107,21 @@ public class ARView: SCNView {
 		LogFunc()
 
 		let clickLocation = gesture.location(in: self)
-		let hitTestResults = self.hitTest(clickLocation)
+		let hitTestOptions: [SCNHitTestOption : Any] = [SCNHitTestOption.sortResults: true]
+		let hitTestResults = self.hitTest(clickLocation, options: hitTestOptions)
 
 		var tappedPanel: ImagePanel?
 		hitTestResults.forEach({ hitResult in
 			if let panel = hitResult.node as? ImagePanel {
 				tappedPanel = panel
+			} else if let panel = hitResult.node.parent as? ImagePanel {
+				tappedPanel = panel
 			}
 		})
+
+		if let panel = tappedPanel {
+			clickAction?(panel)
+		}
 
 	}
 
