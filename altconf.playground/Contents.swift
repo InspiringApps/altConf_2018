@@ -25,6 +25,20 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 
 //Demos.Text.runwithView(sceneView, mode: .addSomeGray)
 
-Demos.Images.runwithView(sceneView, mode: .single)
+func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
+	let radiansFromCenter = degrees * (.pi / 180.0)
+	let x: CGFloat = sin(radiansFromCenter) * radius
+	let z: CGFloat = cos(radiansFromCenter) * radius
+	return SCNVector3(x + xOffset, yOffset, -z)
+}
+
+func positionForRadiansFromCenter(_ radians: Float, atRadius radius: CGFloat, yOffset: Float = 0) -> SCNVector3 {
+	let degrees = CGFloat(-radians * 180 / .pi)
+	return positionForDegreesFromCenter(degrees, atRadius: radius, yOffset:CGFloat(yOffset))
+}
+
+
+Demos.Images.runwithView(sceneView, mode: .many)
+
 
 PlaygroundPage.current.liveView = sceneView

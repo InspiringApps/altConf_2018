@@ -52,9 +52,9 @@ public class ARView: SCNView {
 			rotationGesture = NSPanGestureRecognizer(target: self, action: #selector(handleDrag(gesture:)))
 			addGestureRecognizer(rotationGesture ?? NSPanGestureRecognizer() )
 
-			let doubleTap = NSClickGestureRecognizer(target: self, action: #selector(handleDoubleTap(gesture:)))
-			doubleTap.numberOfClicksRequired = 2
-			addGestureRecognizer(doubleTap)
+			let doubleClick = NSClickGestureRecognizer(target: self, action: #selector(handleDoubleClick(gesture:)))
+			doubleClick.numberOfClicksRequired = 2
+			addGestureRecognizer(doubleClick)
 			rotateNode = true
 		}
 	}
@@ -101,7 +101,23 @@ public class ARView: SCNView {
 	}
 
 	@objc
-	func handleDoubleTap(gesture: NSClickGestureRecognizer) {
+	func handleClick(gesture: NSClickGestureRecognizer) {
+		LogFunc()
+
+		let clickLocation = gesture.location(in: self)
+		let hitTestResults = self.hitTest(clickLocation)
+
+		var tappedPanel: ImagePanel?
+		hitTestResults.forEach({ hitResult in
+			if let panel = hitResult.node as? ImagePanel {
+				tappedPanel = panel
+			}
+		})
+
+	}
+
+	@objc
+	func handleDoubleClick(gesture: NSClickGestureRecognizer) {
 		LogFunc()
 		rotateNode = !rotateNode
 	}

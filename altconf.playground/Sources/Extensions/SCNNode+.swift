@@ -77,7 +77,7 @@ extension SCNNode {
 		dotNode.position.x = self.pivot.m41
 		dotNode.position.y = self.pivot.m42
 		dotNode.position.z = 0
-		dotNode.scale = scale
+//		dotNode.scale = self.scale
 		addChildNode(dotNode)
 	}
 
@@ -87,7 +87,13 @@ extension SCNNode {
 		if let geometry = self.geometry as? SCNText, let text = geometry.string as? String {
 
 			let textString = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: geometry.font])
-			let containerSize = geometry.containerFrame.size
+			var containerSize = geometry.containerFrame.size
+
+			if containerSize == .zero {
+				let textString = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: geometry.font])
+				containerSize = textString.boundingRect(with: geometry.containerFrame.size, options: .usesLineFragmentOrigin, context: nil).size
+
+			}
 
 			let container = NSTextContainer(size: containerSize)
 			container.lineFragmentPadding = 0.0
