@@ -1,3 +1,6 @@
+// Erwin Mazariegos
+// Altconf 2018: AR+SceneKit Tips & Tricks
+
 import Foundation
 
 
@@ -27,12 +30,13 @@ public func LogFunc(_ message: String = "", file: String = #file, function: Stri
 
 	// attempt to align output for readability, by adding an "appropriate" number of tabs
 	let fileNameThreshold: Double = 40
-	let tabCount: Int = fileName.count > Int(fileNameThreshold) ? 1 : max(1, Int(pow((fileNameThreshold - Double(fileName.count)), 1.3) / 19))
-	let padding = String(repeating:"\t", count:tabCount)
-
-	let messageToPrint = (message.count > 0) ? ":\t\(message) " : ""
+	let tabCount: Int = fileName.count > Int(fileNameThreshold) ? 1 : max(1, Int(pow((fileNameThreshold - Double(fileName.count)), 1.3) / 21))
+	let tabPadding = String(repeating:"\t", count:tabCount)
 	let linePadding = "\(line)".count < 3 ? " " : ""
-	print("\(timeMillisecondsString) \(fileName)\(padding)\("[\(line)]")\(linePadding)\t\(thread)\(function)\(messageToPrint)")
+
+	let messageString = message.isEmpty ?  "" : ":\t\(message) "
+
+	print("\(timeMillisecondsString) \(fileName)\(tabPadding)\("[\(line)]")\(linePadding)\t\(thread)\(function)\(messageString)")
 
 	// uncomment when run not running in a playground
 //	#endif
