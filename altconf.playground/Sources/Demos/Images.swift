@@ -57,7 +57,7 @@ public extension Demos {
 					let image = Image.withName(map.1)
 					let imagePanel = ImagePanel(title: map.0, image: image, index: index)
 
-					let degreesFromCenter = ((CGFloat(index) - panelMidPoint) * panelSpacingDegrees)
+					let degreesFromCenter = degreesFromCenterForPanelIndex(index)
 					imagePanel.position = positionForDegreesFromCenter(degreesFromCenter, atRadius: panelBaseRadius)
 					imagePanel.eulerAngles.y = -degreesFromCenter * (.pi / 180.0)
 
@@ -125,14 +125,24 @@ public extension Demos {
 
 			moveCurrentPanelBack()
 
+			if panel == currentPanel {
+				currentPanel = nil
+				return
+			}
+
 			currentPanel = panel
 
 			if let image = panel.contentImage {
+
+				// create an image for the inner surface of a cylinder
+				// since we want the image to only render on half of the inner circumference
+				// we need to make a new imagew that is double the original width
+				// with the image contents in the cenrer, and no content on either side
 				let image2 = image.doubleWidth()
 
 				let imageMaterial = SCNMaterial()
 				imageMaterial.diffuse.contents = image2
-				imageMaterial.lightingModel = .constant
+				imageMaterial.lightingModel = .constant	// so we don't have to point a light at it to see it
 				imageMaterial.isDoubleSided = true
 
 				let cylinderRadius: CGFloat = image.size.width * baseNodeScale
@@ -168,7 +178,10 @@ public extension Demos {
 				panel.imageNode.animateToScale(SCNVector3(0.05, 0.05, 0.01), withDuration: self.panelAnimationDuration)
 				panel.animateRotationByRadians(.pi / 2, withDuration: self.panelAnimationDuration / 2, completion: {
 					panel.restoreGeometry()
-					panel.animateRotationByRadians(.pi / 2, withDuration: self.panelAnimationDuration)
+					panel.animateRotationByRadians(.pi / 2, withDuration: self.panelAnimationDuration, completion: {
+						let degreesFromCenter = self.degreesFromCenterForPanelIndex(panel.panelIndex)
+						panel.eulerAngles.y = -degreesFromCenter * (.pi / 180.0)
+					})
 				})
 			})
 

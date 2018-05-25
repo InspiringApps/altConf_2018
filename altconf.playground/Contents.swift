@@ -25,8 +25,12 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 
 //Demos.Text.runwithView(sceneView, mode: .addSomeGray)
 
-let imageDemo = Demos.Images()
-imageDemo.runwithView(sceneView, mode: .many)
+let here = true
+
+if !here {
+	let imageDemo = Demos.Images()
+	imageDemo.runwithView(sceneView, mode: .many)
+}
 
 func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
 	let radiansFromCenter = degrees * (.pi / 180.0)
@@ -35,14 +39,16 @@ func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, 
 	return SCNVector3(x + xOffset, yOffset, -z)
 }
 
-let originalPosition = positionForDegreesFromCenter(25, atRadius: 10)
+let originalPosition = positionForDegreesFromCenter(25, atRadius: 4)
 let originalRotation: CGFloat = -25 * (.pi / 180.0)
 
 let image = Image.withName("landscape1.jpg")
 let imagePanel = ImagePanel(title: "Testing Stuff", image: image, index: 0)
 imagePanel.position = originalPosition
 imagePanel.eulerAngles.y = originalRotation
-//sceneView.scene?.rootNode.addChildNode(imagePanel)
+if here {
+	sceneView.scene?.rootNode.addChildNode(imagePanel)
+}
 
 var originalImageNodeScale = imagePanel.imageNode.scale
 var originalImageNodePosition = imagePanel.imageNode.position
@@ -78,18 +84,27 @@ func clickPanel() {
 		let cylinder = SCNCylinder(radius: cylinderRadius, height: image.size.height * baseNodeScale)
 		cylinder.materials = [imageMaterial, SCNMaterial.clear, SCNMaterial.clear]
 
+		imagePanel.imageNode.eulerAngles.y
+
 		imagePanel.animateToRotationRadians(imagePanel.eulerAngles.y + .pi / 2, withDuration: panelAnimationDuration / 2, completion: {
-			let initialScale = (imagePanel.originalPanelGeometry.height / cylinder.height) * baseNodeScale
+
+			imagePanel.imageNode.eulerAngles.y
+			sceneView.scene?.rootNode.addChildNode(imagePanel.imageNode)
+			imagePanel.imageNode.eulerAngles.y
+
+			let initialScale = (imagePanel.originalPanelGeometry.height / cylinder.height) * baseNodeScale * imagePanel.scale.x
 			imagePanel.imageNode.scale = SCNVector3(initialScale, initialScale, initialScale)
 			imagePanel.imageNode.geometry = cylinder
-			imagePanel.imageNode.eulerAngles.y = -.pi
+//			imagePanel.imageNode.eulerAngles.y = -.pi
 
-			imagePanel.imageNode.animateToRotationRadians(-135 * .pi / 180, withDuration: panelAnimationDuration)
-			imagePanel.imageNode.animateToScale(SCNVector3Make(1, 1, 1), withDuration: panelAnimationDuration)
+			imagePanel.imageNode.animateRotationByRadians((135 + 180) * .pi / 180, withDuration: panelAnimationDuration)
+			imagePanel.imageNode.eulerAngles.y
+			imagePanel.imageNode.animateToScale(SCNVector3Make(1, 1, 1), withDuration: panelAnimationDuration * 2)
 
 			// since node is now rotated 90 deg, moving along -x axis brings it closer
-			imagePanel.imageNode.animateToPosition(SCNVector3(-25, 0, 0), withDuration: panelAnimationDuration, completion: {
-				movePanelBack()
+			imagePanel.imageNode.animateToPosition(SCNVector3(0, 0, -5), withDuration: panelAnimationDuration, completion: {
+				imagePanel.imageNode.eulerAngles.y
+//				movePanelBack()
 			})
 		})
 	}
@@ -107,11 +122,15 @@ func movePanelBack() {
 			imagePanel.restoreGeometry()
 			imagePanel.imageNode.scale = originalImageNodeScale
 			imagePanel.imageNode.eulerAngles.y = 0
-			imagePanel.animateRotationByRadians(.pi, withDuration: panelAnimationDuration)
+			imagePanel.animateRotationByRadians(.pi, withDuration: panelAnimationDuration, completion: {
+//				clickPanel()
+			})
 		})
 	})
 }
 
-//clickPanel()
+if here {
+	clickPanel()
+}
 
 PlaygroundPage.current.liveView = sceneView
