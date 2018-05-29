@@ -9,11 +9,18 @@ import SceneKit
 	// default: case is required because UIRectCorner is not actually an enum (it's an OptionSet)
 	public enum NSRectCorner { case allCorners, topLeft, topRight, bottomLeft, bottomRight, other }
 	public typealias RectCorner = NSRectCorner
+	public typealias Color = NSColor
 #else
 	public typealias RectCorner = UIRectCorner
+	public typealias Color = UIColor
 #endif
 
 extension SCNNode {
+
+	convenience init(geometry: SCNGeometry, color: Color) {
+		geometry.materials = [SCNMaterial.materialWithColor(color)]
+		self.init(geometry: geometry)
+	}
 
 	public func animateToPosition(_ position: SCNVector3, withDuration duration: TimeInterval, completion: (() -> Void)? = nil) {
 		let animation = CABasicAnimation(keyPath: "position")
@@ -22,6 +29,33 @@ extension SCNNode {
 		animation.duration = duration
 		self.addAnimation(animation, forKey: "node move")
 		self.position = position
+
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration) {
+			completion?()
+		}
+	}
+
+	public func animatePositionBy(_ distance: CGFloat, alongAxis axis: SCNVector3, withDuration duration: TimeInterval, completion: (() -> Void)? = nil) {
+
+		guard axis.x + axis.y + axis.z == 1, axis.x == 1 || axis.y == 1 || axis.z == 1 else {
+			fatalError("'alongAxis' must be a unit vector along one of the primary axes")
+		}
+
+		let newPosition = SCNVector3(
+			self.position.x + axis.x * distance,
+			self.position.y + axis.y * distance,
+			self.position.z + axis.z * distance)
+
+		animateToPosition(newPosition, withDuration: duration, completion: completion)
+	}
+
+	public func animateToOpacity(_ opacity: CGFloat, withDuration duration: TimeInterval, completion: (() -> Void)? = nil) {
+		let animation = CABasicAnimation(keyPath: "opacity")
+		animation.fromValue = self.opacity
+		animation.toValue = opacity
+		animation.duration = duration
+		self.addAnimation(animation, forKey: "node fade")
+		self.opacity = opacity
 
 		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration) {
 			completion?()
@@ -82,7 +116,7 @@ extension SCNNode {
 
 	public func showPivot(_ color: NSColor = .red) {
 		let primarySize = max(0.1, ((boundingBox.max.x - boundingBox.min.x) + (boundingBox.max.y - boundingBox.min.y)) / 2)
-		let dotSize = CGFloat(primarySize / 20)
+		let dotSize = CGFloat(primarySize / 30)
 		let materialColor = SCNMaterial()
 		materialColor.diffuse.contents = color
 		let dot = SCNSphere(radius: dotSize)

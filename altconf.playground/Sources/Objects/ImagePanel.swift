@@ -102,15 +102,15 @@ public class ImagePanel: SCNNode {
 		super.init(coder: aDecoder)
 	}
 
-	public func restoreGeometry() {
+	public func reset() {
 		LogFunc()
+		addChildNode(imageNode)
 		panelNode.geometry = originalPanelGeometry
 		imageNode.geometry = originalImageGeometry
 		imageNode.scale = originalImageNodeScale
 		imageNode.position = originalImageNodePosition
 		imageNode.eulerAngles.y = 0
 	}
-
 
 }
 

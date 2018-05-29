@@ -23,7 +23,7 @@ public extension SCNMaterial {
 		return material
 	}
 
-	static func materialWithColor(_ color: NSColor) -> SCNMaterial {
+	static func materialWithColor(_ color: Color) -> SCNMaterial {
 		let material = SCNMaterial()
 		material.diffuse.contents = color
 		return material

@@ -40,9 +40,9 @@ public extension Demos {
 
 			let minimumPanelRadius: CGFloat = 1.0
 
-			panelSpacingDegrees = 180.0 / CGFloat(imageMap.count) + 10
+			panelSpacingDegrees = 180.0 / CGFloat(imageMap.count)
 			panelMidPoint = 0.5 * CGFloat(imageMap.count - 1)
-			panelBaseRadius = max(minimumPanelRadius, CGFloat(imageMap.count) * 0.8)
+			panelBaseRadius = max(minimumPanelRadius, CGFloat(imageMap.count) * 1.4)
 
 			switch mode {
 			case .single:
@@ -132,12 +132,12 @@ public extension Demos {
 
 			currentPanel = panel
 
-			if let image = panel.contentImage {
+			if let image = panel.contentImage, let sceneView = demoSceneView {
 
-				// create an image for the inner surface of a cylinder
-				// since we want the image to only render on half of the inner circumference
-				// we need to make a new imagew that is double the original width
-				// with the image contents in the cenrer, and no content on either side
+				// Create an image for the inner surface of a cylinder
+				// Since we want the image to only render on half of the inner circumference,
+				// we need to make a new image that is double the original width,
+				// with the image contents in the center, and no content on the outer 1/4's of the width
 				let image2 = image.doubleWidth()
 
 				let imageMaterial = SCNMaterial()
@@ -145,21 +145,22 @@ public extension Demos {
 				imageMaterial.lightingModel = .constant	// so we don't have to point a light at it to see it
 				imageMaterial.isDoubleSided = true
 
-				let cylinderRadius: CGFloat = image.size.width * baseNodeScale
+				let cylinderRadius: CGFloat = image.size.width * baseNodeScale / 3
 				let cylinder = SCNCylinder(radius: cylinderRadius, height: image.size.height * baseNodeScale)
 				cylinder.materials = [imageMaterial, SCNMaterial.clear, SCNMaterial.clear]
 
+				panel.animateToOpacity(0, withDuration: panelAnimationDuration)
+
 				panel.animateToRotationRadians(panel.eulerAngles.y + .pi / 2, withDuration: panelAnimationDuration / 2, completion: {
-					let initialScale = (panel.originalPanelGeometry.height / cylinder.height) * self.baseNodeScale
+
+					sceneView.scene?.rootNode.addChildNode(panel.imageNode)
+
+					let initialScale = (panel.originalPanelGeometry.height / cylinder.height) * self.baseNodeScale * panel.scale.x
 					panel.imageNode.scale = SCNVector3(initialScale, initialScale, initialScale)
 					panel.imageNode.geometry = cylinder
-					panel.imageNode.eulerAngles.y = -.pi
 
-					panel.imageNode.animateToRotationRadians(-135 * .pi / 180, withDuration: self.panelAnimationDuration / 2)
-					panel.imageNode.animateToScale(SCNVector3Make(1, 1, 1), withDuration: self.panelAnimationDuration)
-
-					// since node is now rotated 90 deg, moving along -x axis brings it closer to camera
-					panel.imageNode.animateToPosition(SCNVector3(-12, 0, 0), withDuration: self.panelAnimationDuration / 2)
+					panel.imageNode.animateRotationByRadians((90 + 180) * .pi / 180, withDuration: self.panelAnimationDuration)
+					panel.imageNode.animateToScale(SCNVector3Make(1, 1, 1), withDuration: self.panelAnimationDuration * 2)
 				})
 			}
 		}
@@ -168,6 +169,7 @@ public extension Demos {
 			LogFunc()
 
 			guard let panel = currentPanel else {
+				LogFunc("no current panel")
 				return
 			}
 
@@ -175,13 +177,12 @@ public extension Demos {
 			panel.imageNode.animateToPosition(panel.originalImageNodePosition, withDuration: panelAnimationDuration)
 			// scale along z faster to keep cylinder close to panel node
 			panel.imageNode.animateToScale(SCNVector3(0.2, 0.2, 0.05), withDuration: panelAnimationDuration, completion: {
+				panel.animateToOpacity(1, withDuration: self.panelAnimationDuration)
 				panel.imageNode.animateToScale(SCNVector3(0.05, 0.05, 0.01), withDuration: self.panelAnimationDuration)
+				panel.addChildNode(panel.imageNode)
 				panel.animateRotationByRadians(.pi / 2, withDuration: self.panelAnimationDuration / 2, completion: {
-					panel.restoreGeometry()
-					panel.animateRotationByRadians(.pi / 2, withDuration: self.panelAnimationDuration, completion: {
-						let degreesFromCenter = self.degreesFromCenterForPanelIndex(panel.panelIndex)
-						panel.eulerAngles.y = -degreesFromCenter * (.pi / 180.0)
-					})
+					panel.reset()
+					panel.animateRotationByRadians(.pi, withDuration: self.panelAnimationDuration)
 				})
 			})
 

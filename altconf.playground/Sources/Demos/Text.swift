@@ -10,7 +10,7 @@ extension Demos {
 	public struct Text {
 
 		public enum DemoMode {
-			case oneCentered, oneTopLeft, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle
+			case oneBottomLeft, oneCentered, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle
 			case addBlueMaterial, addSomeGray
 		}
 
@@ -21,6 +21,7 @@ extension Demos {
 
 			let headerHeight: CGFloat = 5
 			var titleTextNode = SCNNode()
+			var panelNode = SCNNode()
 
 			func addNodeForText(_ text: String, withPivotCorner corner: RectCorner, index: Int, materials: [SCNMaterial] = [SCNMaterial.white]) {
 
@@ -30,7 +31,7 @@ extension Demos {
 				let placeholderGeometry = SCNBox(width: 20, height: panelGeometry.height - headerHeight, length: 1, chamferRadius: 3)
 				placeholderGeometry.materials = [SCNMaterial.clear]
 
-				let panelNode = SCNNode(geometry: panelGeometry)
+				panelNode = SCNNode(geometry: panelGeometry)
 				panelNode.position = SCNVector3(0, CGFloat(index - 1) * (panelGeometry.height + 35) * 0.1, 0)
 				panelNode.scale = SCNVector3(0.2, 0.2, 0.2)
 
@@ -61,10 +62,11 @@ extension Demos {
 			}
 
 			switch mode {
+			case .oneBottomLeft:
+				addNodeForText(String(text.prefix(100)), withPivotCorner: .bottomLeft, index: 1)
+				panelNode.showPivot()
 			case .oneCentered:
 				addNodeForText(String(text.prefix(150)), withPivotCorner: .allCorners, index: 1)
-			case .oneTopLeft:
-				addNodeForText(String(text.prefix(100)), withPivotCorner: .topLeft, index: 1)
 			case .varyLengthsCentered:
 				let corner = RectCorner.allCorners
 				addNodeForText(String(text.prefix(15)), withPivotCorner: corner, index: 0)

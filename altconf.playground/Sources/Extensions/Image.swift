@@ -13,11 +13,24 @@ extension Image {
 
 		let newSize = CGSize(width: self.size.width * 2, height: self.size.height)
 
-		let scaledImage = Image(size: newSize, flipped: false, drawingHandler: { (rect) in
-			self.draw(in: CGRect(origin: CGPoint(x: -self.size.width / 2, y: 0), size: self.size))
-			return true
-		})
+		let scaledImage = Image(size: newSize)
+		scaledImage.lockFocus()
 
+		if let context = NSGraphicsContext.current {
+			context.imageInterpolation = .high
+
+			// we're going to use this image as a cylinder material, but it will be viewed
+			// from the inside of the cylinder, ie the outer surface's "backside"
+			// so we need to flip it left-to-right so it will look correct
+			let transform = NSAffineTransform()
+			transform.translateX(by: self.size.width / 2, yBy: 0)
+			transform.scaleX(by: -1, yBy: 1)
+			transform.concat()
+
+			self.draw(in: CGRect(origin: CGPoint(x: -self.size.width / 2, y: 0), size: self.size))
+		}
+
+		scaledImage.unlockFocus()
 		return scaledImage
 	}
 }
