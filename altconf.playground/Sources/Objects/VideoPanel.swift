@@ -110,6 +110,8 @@ public class VideoPanel: SCNNode {
 		videoNode.size = skScene.size
 		skScene.addChild(videoNode)
 
+		// flip video upside down so it renders properly
+		// FIXME: video is still flipped left-right
 		var transform = SCNMatrix4MakeRotation(.pi, 0.0, 0.0, 1.0)
 		transform = SCNMatrix4Translate(transform, 1.0, 1.0, 0.0)
 
@@ -119,14 +121,15 @@ public class VideoPanel: SCNNode {
 		videoMaterial.lightingModel = .constant	// so we don't have to point a light at it to see it
 		screenGeometry.materials = [videoMaterial]
 
-//		videoObserver = videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: CMTime(seconds: 0.25, preferredTimescale: 600))], queue: DispatchQueue.main) {
-//			if let observer = self.videoObserver {
-//				self.videoPlayer.removeTimeObserver(observer)
-//			}
-//			self.loopVideoSlice()
-//		}
-//		videoPlayer.volume = 0
-//		videoPlayer.play()
+		videoObserver = videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: CMTime(seconds: 0.5, preferredTimescale: 600))], queue: DispatchQueue.main) {
+			if let observer = self.videoObserver {
+				self.videoPlayer.removeTimeObserver(observer)
+			}
+			self.loopVideoSlice()
+		}
+
+		videoPlayer.volume = 0
+		videoPlayer.play()
 	}
 
 	func loopVideoSlice() {
@@ -135,11 +138,21 @@ public class VideoPanel: SCNNode {
 		guard let item = videoPlayer.currentItem else {
 			return
 		}
-
 		let fullDuration = item.duration
 		let sliceStart = CMTimeMultiplyByFloat64(fullDuration, 0.25)
-		let sliceEnd = CMTimeAdd(sliceStart, CMTime(seconds: 1, preferredTimescale: fullDuration.timescale))
+		let sliceEnd = CMTimeAdd(sliceStart, CMTime(seconds: 4, preferredTimescale: fullDuration.timescale))
 
+		// different behavior on different platforms ¯\_(ツ)_/¯
+#if os(OSX)
+		videoObserver = videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: sliceStart), NSValue(time: sliceEnd)], queue: DispatchQueue.main) {
+			if CMTimeCompare(self.videoPlayer.currentTime(), sliceEnd) == 1 {
+				self.videoPlayer.rate = -1
+			}
+			if CMTimeCompare(self.videoPlayer.currentTime(), sliceStart) == -1 {
+				self.videoPlayer.rate = 1
+			}
+		}
+#else
 		videoObserver = videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: sliceEnd)], queue: DispatchQueue.main) {
 			self.videoPlayer.rate = -1
 		}
@@ -147,6 +160,7 @@ public class VideoPanel: SCNNode {
 		videoObserver = videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: sliceStart)], queue: DispatchQueue.main) {
 			self.videoPlayer.rate = 1
 		}
+#endif
 
 		videoPlayer.seek(to: sliceStart)
 		videoPlayer.play()
