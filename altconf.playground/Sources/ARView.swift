@@ -6,8 +6,7 @@ import SceneKit
 
 public class ARView: SCNView {
 
-	public var clickAction: ((Any?) -> Void)?
-	public var hitTestNaive = true
+	public var clickAction: (([SCNHitTestResult]) -> Void)?
 
 	var startTransform: SCNMatrix4?
 	var rotatableNode: SCNNode?
@@ -117,38 +116,7 @@ public class ARView: SCNView {
 		let hitTestOptions: [SCNHitTestOption : Any] = [SCNHitTestOption.sortResults: true]
 		let hitTestResults = self.hitTest(clickLocation, options: hitTestOptions)
 
-		// set as empty value instead of an optional to deal with playground bug below
-		var tappedPanel = ImagePanel()
-
-		hitTestResults.forEach({ hitResult in
-
-			if hitTestNaive {
-				// see if we clicked an imageNode or one of its children
-				// the problem with this approach is the image node includes things like lights
-				// which are invisible and far from teh visible nodes.
-				if let panel = hitResult.node as? ImagePanel {
-					tappedPanel = panel
-				} else if let panel = hitResult.node.parent as? ImagePanel {
-					tappedPanel = panel
-				}
-			} else {
-				// see if we clicked a panel node, header node, or content plane
-				hitTestResults.forEach({ hitResult in
-					if let geometry = hitResult.node.geometry,
-						let parent = hitResult.node.parent as? ImagePanel {
-						if let _ = geometry as? SCNBox {
-							tappedPanel = parent
-						} else if let _ = geometry as? SCNPlane {
-							tappedPanel = parent
-						}
-					}
-				})
-			}
-		})
-
-		// weird playground bug: declaring the parameter as an optional, and sending nil,
-		// results in the function not getting called.
-		action(tappedPanel)
+		action(hitTestResults)
 	}
 
 	@objc

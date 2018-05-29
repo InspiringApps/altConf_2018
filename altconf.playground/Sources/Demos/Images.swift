@@ -13,6 +13,8 @@ public extension Demos {
 			case single, many
 		}
 
+		public var hitTestNaive = true
+
 		let panelAnimationDuration = 1.0
 		let baseNodeScale: CGFloat = 0.02
 
@@ -98,26 +100,46 @@ public extension Demos {
 					clickGesture = NSClickGestureRecognizer(target: sceneView, action: #selector(sceneView.handleClick(gesture:)))
 					sceneView.addGestureRecognizer(clickGesture ?? NSClickGestureRecognizer() )
 
-					sceneView.clickAction = { (anyNode) in
-						if let panel = anyNode as? ImagePanel {
-							self.clickPanel(panel)
-						}
+					sceneView.clickAction = { (results) in
+						self.processHitTestResults(results)
 					}
 				}
 
 			}
 		}
 
-		func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
-			let radiansFromCenter = degrees * (.pi / 180.0)
-			let x: CGFloat = sin(radiansFromCenter) * radius
-			let z: CGFloat = cos(radiansFromCenter) * radius
-			return SCNVector3(x + xOffset, yOffset, -z)
-		}
+		public func processHitTestResults(_ results: [SCNHitTestResult]) {
+			LogFunc()
 
-		func positionForRadiansFromCenter(_ radians: Float, atRadius radius: CGFloat, yOffset: Float = 0) -> SCNVector3 {
-			let degrees = CGFloat(-radians * 180 / .pi)
-			return positionForDegreesFromCenter(degrees, atRadius: radius, yOffset:CGFloat(yOffset))
+			var tappedPanel: ImagePanel?
+
+			results.forEach({ hitResult in
+
+				if hitTestNaive {
+					// see if we clicked an imageNode or one of its children
+					// the problem with this approach is the image node includes things like lights
+					// which are invisible and far from teh visible nodes.
+					if let panel = hitResult.node as? ImagePanel {
+						tappedPanel = panel
+					} else if let panel = hitResult.node.parent as? ImagePanel {
+						tappedPanel = panel
+					}
+				} else {
+					// see if we clicked a panel node, header node, or content plane
+						if let geometry = hitResult.node.geometry,
+							let parent = hitResult.node.parent as? ImagePanel {
+							if let _ = geometry as? SCNBox {
+								tappedPanel = parent
+							} else if let _ = geometry as? SCNPlane {
+								tappedPanel = parent
+							}
+						}
+				}
+			})
+
+			if let panel = tappedPanel {
+				clickPanel(panel)
+			}
 		}
 
 		public func clickPanel(_ panel: ImagePanel) {
@@ -188,10 +210,21 @@ public extension Demos {
 
 		}
 
+		func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
+			let radiansFromCenter = degrees * (.pi / 180.0)
+			let x: CGFloat = sin(radiansFromCenter) * radius
+			let z: CGFloat = cos(radiansFromCenter) * radius
+			return SCNVector3(x + xOffset, yOffset, -z)
+		}
+
+		func positionForRadiansFromCenter(_ radians: Float, atRadius radius: CGFloat, yOffset: Float = 0) -> SCNVector3 {
+			let degrees = CGFloat(-radians * 180 / .pi)
+			return positionForDegreesFromCenter(degrees, atRadius: radius, yOffset:CGFloat(yOffset))
+		}
+
 		func degreesFromCenterForPanelIndex(_ index: Int) -> CGFloat {
 			return ((CGFloat(index) - panelMidPoint) * panelSpacingDegrees)
 		}
-
 
 	}
 
