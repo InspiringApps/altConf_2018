@@ -54,7 +54,7 @@ case .none:
 	cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
 }
 
-
+	sceneView.debugOptions = .showBoundingBoxes
 
 
 // Demos.Measurement.DemoMode { single, random, all }

@@ -74,7 +74,7 @@ public class VideoPanel: SCNNode {
 		label.yScale = -1
 		label.fontColor = .magenta
 		label.fontName = "Helvetica"
-		label.fontSize = 24
+		label.fontSize = 36
 		label.horizontalAlignmentMode = .center
 		label.verticalAlignmentMode = .center
 		label.numberOfLines = 0
@@ -84,15 +84,15 @@ public class VideoPanel: SCNNode {
 
 		let textMaterial = SCNMaterial()
 		textMaterial.isDoubleSided = true
+		textMaterial.lightingModel = .constant
 		textMaterial.diffuse.contents = skScene
+		textMaterial.reflective.contents = NSColor.blue
 
 		let nodeGeometry = SCNPlane(width: sceneSize.width, height: sceneSize.height)
 		nodeGeometry.materials = [textMaterial]
 
-//		let yPosition = ((panelGeometry.height + headerGeometry.height - 10) / 2) * topNode.scale.y
 		let titleTextNode = SCNNode(geometry: nodeGeometry)
-		titleTextNode.scale = headerNode.scale
-		titleTextNode.position = SCNVector3(0, 0, 0)	// z = 0 means text is inside translucent node
+		titleTextNode.position = SCNVector3(0, headerGeometry.height / 2 - label.fontSize, 0.1)
 
 		headerNode.addChildNode(titleTextNode)
 	}

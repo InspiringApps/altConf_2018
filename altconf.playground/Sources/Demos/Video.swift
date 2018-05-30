@@ -115,10 +115,8 @@ extension Demos {
 
 			results.forEach({ hitResult in
 				if let geometry = hitResult.node.geometry,
-					let parent = hitResult.node.parent as? VideoPanel {
-					if let _ = geometry as? SCNBox {
-						tappedPanel = parent
-					} else if let _ = geometry as? SCNPlane {
+					let parent = hitResult.node.parent?.parent as? VideoPanel {
+					if let _ = geometry as? SCNPlane {
 						tappedPanel = parent
 					}
 				}
