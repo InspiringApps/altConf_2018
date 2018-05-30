@@ -19,6 +19,11 @@ public class VideoPanel: SCNNode {
 	public var videoPlayer = AVPlayer()
 	public var videoObserver: Any?
 
+	public typealias NodeAction = (node: SCNNode, action: SCNAction)
+	public var openActions = [NodeAction]()
+	public var closeActions = [NodeAction]()
+	public var isOpen = false
+
 	override init() {
 		super.init()
 	}
@@ -48,6 +53,7 @@ public class VideoPanel: SCNNode {
 			self.addChildNode($0)
 		})
 
+		processActionsInNode()
 		addTitleText(title: title)
 		addVideoFile(videoFile)
 	}
@@ -58,6 +64,25 @@ public class VideoPanel: SCNNode {
 
 	public func reset() {
 		LogFunc()
+	}
+
+	/// extract actions defined in Scene editor for use as needed
+	func processActionsInNode() {
+		LogFunc()
+
+		childNodes.forEach({ node in
+			if node.hasActions  {
+				let key = node.actionKeys[0]
+				if let open = node.action(forKey: key) {
+					let closed = open.reversed()
+					openActions.append(NodeAction(node, open))
+					closeActions.append(NodeAction(node, closed))
+				}
+				// now that we have refernces to the actions,
+				// we remove them from the node so they don't run on their own
+				node.removeAllActions()
+			}
+		})
 	}
 
 	func addTitleText(title: String) {
@@ -72,9 +97,9 @@ public class VideoPanel: SCNNode {
 
 		let label = SKLabelNode(text: title)
 		label.yScale = -1
-		label.fontColor = .magenta
+		label.fontColor = .yellow
 		label.fontName = "Helvetica"
-		label.fontSize = 36
+		label.fontSize = 32
 		label.horizontalAlignmentMode = .center
 		label.verticalAlignmentMode = .center
 		label.numberOfLines = 0
@@ -86,7 +111,7 @@ public class VideoPanel: SCNNode {
 		textMaterial.isDoubleSided = true
 		textMaterial.lightingModel = .constant
 		textMaterial.diffuse.contents = skScene
-		textMaterial.reflective.contents = NSColor.blue
+		textMaterial.reflective.contents = NSColor.black
 
 		let nodeGeometry = SCNPlane(width: sceneSize.width, height: sceneSize.height)
 		nodeGeometry.materials = [textMaterial]
@@ -121,7 +146,7 @@ public class VideoPanel: SCNNode {
 		videoMaterial.lightingModel = .constant	// so we don't have to point a light at it to see it
 		screenGeometry.materials = [videoMaterial]
 
-		videoObserver = videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: CMTime(seconds: 0.5, preferredTimescale: 600))], queue: DispatchQueue.main) {
+		videoObserver = videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: CMTime(seconds: 1.0, preferredTimescale: 600))], queue: DispatchQueue.main) {
 			if let observer = self.videoObserver {
 				self.videoPlayer.removeTimeObserver(observer)
 			}

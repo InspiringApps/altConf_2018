@@ -31,7 +31,7 @@ enum DemoDriver {
 	case none
 }
 
-let currentDemo = DemoDriver.video(mode: .temp)
+let currentDemo = DemoDriver.video(mode: .many)
 
 switch currentDemo {
 case .measure(let mode):
@@ -54,12 +54,11 @@ case .none:
 	cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
 }
 
-	sceneView.debugOptions = .showBoundingBoxes
 
+// measure { single, random, all }
 
-// Demos.Measurement.DemoMode { single, random, all }
+// text { oneBottomLeft, oneCentered, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle, addBlueMaterial, addSomeGray }
 
-// Demos.Text.DemoMode 		{ oneBottomLeft, oneCentered, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle, addBlueMaterial, addSomeGray }
-
-// Demos.Images.DemoMode { single, many }
+// image { one, many }
+// video { one, many }
 

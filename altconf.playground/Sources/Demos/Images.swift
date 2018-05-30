@@ -10,7 +10,7 @@ public extension Demos {
 	public class Images {
 
 		public enum DemoMode {
-			case single, many
+			case one, many
 		}
 
 		public var hitTestNaive = true
@@ -47,7 +47,7 @@ public extension Demos {
 			panelBaseRadius = max(minimumPanelRadius, CGFloat(imageMap.count) * 1.4)
 
 			switch mode {
-			case .single:
+			case .one:
 
 				let image = Image.withName(imageMap[0].1)
 				let imagePanel = ImagePanel(title: imageMap[0].0, image: image, index: 0)

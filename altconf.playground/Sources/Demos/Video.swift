@@ -11,7 +11,7 @@ extension Demos {
 	public class Video {
 
 		public enum DemoMode {
-			case temp
+			case one, many
 		}
 
 		var panelBaseRadius: CGFloat = 1.0
@@ -29,50 +29,36 @@ extension Demos {
 			LogFunc()
 
 			let videoMap = [
-				("Flow Valley - Night", "vid1_trimmed.mov"),
-				("Across", "vid2_trimmed.mov"),
-				("Flow - Day", "vid3_trimmed.mov")
+				("Urban Valley: Night", "vid1_trimmed.mov"),
+				("Bridge Across", "vid2_trimmed.mov"),
+				("Tentacles: Day", "vid3_trimmed.mov")
 			]
 
 			let minimumPanelRadius: CGFloat = 1.0
 
 			panelSpacingDegrees = 180.0 / CGFloat(videoMap.count)
 			panelMidPoint = 0.5 * CGFloat(videoMap.count - 1)
-			panelBaseRadius = max(minimumPanelRadius, CGFloat(videoMap.count) * 1.4)
+			panelBaseRadius = max(minimumPanelRadius, CGFloat(videoMap.count) * 1.6)
 
-			for (index, map) in videoMap.enumerated() {
-				let videoNode = VideoPanel(title: map.0, videoFile: map.1, index: index)
-
-				let degreesFromCenter = degreesFromCenterForPanelIndex(index)
-				videoNode.position = positionForDegreesFromCenter(degreesFromCenter, atRadius: panelBaseRadius)
-				videoNode.eulerAngles.y = -degreesFromCenter * (.pi / 180.0)
-
+			switch mode {
+			case .one:
+				let videoNode = VideoPanel(title: videoMap[0].0, videoFile: videoMap[0].1, index: 0)
+				videoNode.position = positionForDegreesFromCenter(0, atRadius: panelBaseRadius)
 				sceneView.scene?.rootNode.addChildNode(videoNode)
 
-				videoNode.videoObserver = videoNode.videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: CMTime(seconds: 0.25, preferredTimescale: 600))], queue: DispatchQueue.main) {
-					if let observer = videoNode.videoObserver {
-						videoNode.videoPlayer.removeTimeObserver(observer)
-					}
-					self.loopVideoSliceForNode(videoNode)
+			case .many:
+				for (index, map) in videoMap.enumerated() {
+					let videoNode = VideoPanel(title: map.0, videoFile: map.1, index: index)
+
+					let degreesFromCenter = degreesFromCenterForPanelIndex(index)
+					videoNode.position = positionForDegreesFromCenter(degreesFromCenter, atRadius: panelBaseRadius)
+					videoNode.eulerAngles.y = -degreesFromCenter * (.pi / 180.0)
+
+					sceneView.scene?.rootNode.addChildNode(videoNode)
 				}
-				videoNode.videoPlayer.volume = 0
-				videoNode.videoPlayer.play()
 			}
 
-			//			switch mode {
-			//			case .oneCentered:
-			//
-			//			case .oneTopLeft:
-			//
-			//			case .varyLengthsCentered:
-			//
-			//			case .varyLengthsBottomLeft:
-			//
-			//			case .sphericalTitle:
-			//
-			//			}
-
-			if clickGesture == nil {
+			if clickGesture == nil {	// ensure click gesture is only added once
 				clickGesture = NSClickGestureRecognizer(target: sceneView, action: #selector(sceneView.handleClick(gesture:)))
 				sceneView.addGestureRecognizer(clickGesture ?? NSClickGestureRecognizer() )
 
@@ -82,30 +68,7 @@ extension Demos {
 			}
 
 			demoSceneView = sceneView
-			sceneView.scene?.isPaused = true
-		}
-
-		func loopVideoSliceForNode(_ videoNode: VideoPanel) {
-			LogFunc()
-
-			guard let item = videoNode.videoPlayer.currentItem else {
-				return
-			}
-
-			let fullDuration = item.duration
-			let sliceStart = CMTimeMultiplyByFloat64(fullDuration, 0.25)
-			let sliceEnd = CMTimeAdd(sliceStart, CMTime(seconds: 1, preferredTimescale: fullDuration.timescale))
-
-			videoNode.videoObserver = videoNode.videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: sliceEnd)], queue: DispatchQueue.main) {
-				videoNode.videoPlayer.rate = -1
-			}
-			// reseting videoObserver like this works much better than setting both boundaries in one call (which doesn't work at all)
-			videoNode.videoObserver = videoNode.videoPlayer.addBoundaryTimeObserver(forTimes: [NSValue(time: sliceStart)], queue: DispatchQueue.main) {
-				videoNode.videoPlayer.rate = 1
-			}
-
-			videoNode.videoPlayer.seek(to: sliceStart)
-			videoNode.videoPlayer.play()
+			sceneView.scene?.isPaused = true	// prevent actions from running prematurely
 		}
 
 		public func processHitTestResults(_ results: [SCNHitTestResult]) {
@@ -117,6 +80,8 @@ extension Demos {
 				if let geometry = hitResult.node.geometry,
 					let parent = hitResult.node.parent?.parent as? VideoPanel {
 					if let _ = geometry as? SCNPlane {
+						tappedPanel = parent
+					} else if let _ = geometry as? SCNBox {
 						tappedPanel = parent
 					}
 				}
@@ -130,10 +95,20 @@ extension Demos {
 		public func clickPanel(_ panel: VideoPanel) {
 			LogFunc()
 
-			if let scene = demoSceneView?.scene {
-				scene.setAttribute(1.0, forKey: "\(SCNScene.Attribute.endTime)")
-				scene.isPaused = false
+			// actions have been removed from the nodes,
+			// we need to unpause the scene so we can run them here
+			demoSceneView?.scene?.isPaused = false
+
+			if panel.isOpen {
+				panel.closeActions.forEach({ nodeAction in
+					nodeAction.node.runAction(nodeAction.action)
+				})
+			} else {
+				panel.openActions.forEach({ nodeAction in
+					nodeAction.node.runAction(nodeAction.action)
+				})
 			}
+			panel.isOpen = !panel.isOpen
 		}
 
 		func positionForDegreesFromCenter(_ degrees: CGFloat, atRadius radius: CGFloat, xOffset: CGFloat = 0, yOffset: CGFloat = 0) -> SCNVector3 {
