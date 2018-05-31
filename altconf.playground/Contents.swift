@@ -1,10 +1,7 @@
 //: A Cocoa based Playground to play with SceneKit
 
-// spritekit video
 // portal w/ altconf logo inside
 // panel to image morph
-// panel spotlight
-// animated people in audience
 
 import AppKit
 import PlaygroundSupport
@@ -31,7 +28,7 @@ enum DemoDriver {
 	case none
 }
 
-let currentDemo = DemoDriver.image(mode: .addMob)
+let currentDemo = DemoDriver.none
 
 switch currentDemo {
 case .measure(let mode):
@@ -53,6 +50,58 @@ case .video(let mode):
 case .none:
 	cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
 }
+
+
+//func appendImage(image: UIImage) {
+//	LogMethod()
+//
+//	var size: CGFloat?
+//	if (self.outputText.string.utf16Count > 0) {
+//		size = self.outputText.attribute(NSFontAttributeName, atIndex:0, effectiveRange:nil)?.pointSize
+//	}
+//
+//	if (size == nil) {
+//		size = self.fontSize()
+//	}
+//
+//	var imageAttachment: NSTextAttachment = NSTextAttachment()
+//	imageAttachment.image = image
+//	imageAttachment.bounds = CGRectMake(0, -2, size! + 2, size! + 2)
+//	var imageAttributedString = NSAttributedString(attachment: imageAttachment)
+//
+//	self.outputText.appendAttributedString(imageAttributedString)
+//
+//	self.outputTextView.attributedText = self.outputText
+//	self.hasImage = true
+//	self.appendText(" ")
+//	self.setCopyKeyAppearance()
+//	self.adjustSize()
+//}
+//
+
+
+
+let logo = Image.withName("altconf_logo")
+
+let logoAttachmwnt = NSTextAttachment()
+logoAttachmwnt.image = logo
+logoAttachmwnt.bounds = CGRect(x: 0, y: -2, width: 14, height: 14)
+let logoText = NSAttributedString(attachment: logoAttachmwnt)
+
+let containerText = NSMutableAttributedString(string: "one")
+containerText.append(logoText)
+containerText.append(NSAttributedString(string: "two"))
+
+let logoGeometry = SCNText(string: containerText, extrusionDepth: 2)
+logoGeometry.materials = [SCNMaterial.green]
+
+let logoNode = SCNNode(geometry: logoGeometry)
+logoNode.scale = SCNVector3(0.1, 0.1, 0.1)
+
+sceneView.scene?.rootNode.addChildNode(logoNode)
+sceneView.debugOptions = .showBoundingBoxes
+
+
 
 
 // measure { single, random, all }
