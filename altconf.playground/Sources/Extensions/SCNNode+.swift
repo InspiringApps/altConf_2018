@@ -114,6 +114,17 @@ extension SCNNode {
 		return isChild
 	}
 
+	public func ancestorOfClass(_ nodeClass: SCNNode.Type) -> SCNNode? {
+		if let parentNode = parent {
+			if type(of: parentNode) == nodeClass {
+				return parentNode
+			} else {
+				return parentNode.ancestorOfClass(nodeClass)
+			}
+		}
+		return nil
+	}
+
 	public func showPivot(_ color: NSColor = .red) {
 		let primarySize = max(0.1, ((boundingBox.max.x - boundingBox.min.x) + (boundingBox.max.y - boundingBox.min.y)) / 2)
 		let dotSize = CGFloat(primarySize / 30)

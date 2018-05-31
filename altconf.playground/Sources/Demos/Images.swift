@@ -10,7 +10,7 @@ public extension Demos {
 	public class Images {
 
 		public enum DemoMode {
-			case one, many
+			case one, many, addMob
 		}
 
 		public var hitTestNaive = true
@@ -46,6 +46,8 @@ public extension Demos {
 			panelMidPoint = 0.5 * CGFloat(imageMap.count - 1)
 			panelBaseRadius = max(minimumPanelRadius, CGFloat(imageMap.count) * 1.4)
 
+			demoSceneView = sceneView
+
 			switch mode {
 			case .one:
 
@@ -54,58 +56,76 @@ public extension Demos {
 				sceneView.scene?.rootNode.addChildNode(imagePanel)
 
 			case .many:
-
-				for (index, map) in imageMap.enumerated() {
-					let image = Image.withName(map.1)
-					let imagePanel = ImagePanel(title: map.0, image: image, index: index)
-
-					let degreesFromCenter = degreesFromCenterForPanelIndex(index)
-					imagePanel.position = positionForDegreesFromCenter(degreesFromCenter, atRadius: panelBaseRadius)
-					imagePanel.eulerAngles.y = -degreesFromCenter * (.pi / 180.0)
-
-					sceneView.scene?.rootNode.addChildNode(imagePanel)
-				}
-
-				let largeFontSize: CGFloat = 24
-				let smallFontSize: CGFloat = 14
-
-				let nameText = SCNText(string: "AltConf 2018", extrusionDepth: 2)
-				nameText.font = .systemFont(ofSize: largeFontSize)
-				nameText.materials = [SCNMaterial.white, SCNMaterial.white, SCNMaterial.black]	// front, back, extruded
-
-				let nameTextNode = SCNNode()
-				nameTextNode.geometry = nameText
-				nameTextNode.pivotAtCorner(.allCorners)
-				nameTextNode.position = positionForDegreesFromCenter(0, atRadius: 3, yOffset: -2)
-				nameTextNode.scale = SCNVector3(baseNodeScale, baseNodeScale, baseNodeScale)
-				nameTextNode.eulerAngles.x = -45 * (.pi / 180)
-
-				sceneView.scene?.rootNode.addChildNode(nameTextNode)
-
-				let descriptionText = SCNText(string: "AR + SceneKit Tips and Tricks", extrusionDepth: 2)
-				descriptionText.font = .systemFont(ofSize: smallFontSize)
-				descriptionText.materials = [SCNMaterial.white, SCNMaterial.white, SCNMaterial.black]	// front, back, extruded
-
-				let descriptionTextNode = SCNNode()
-				descriptionTextNode.geometry = descriptionText
-				descriptionTextNode.pivotAtCorner(.allCorners)
-				descriptionTextNode.position = positionForDegreesFromCenter(0, atRadius: 2.8, yOffset: -2.5)
-				descriptionTextNode.scale = SCNVector3(baseNodeScale, baseNodeScale, baseNodeScale)
-				descriptionTextNode.eulerAngles.x = -45 * (.pi / 180)
-
-				sceneView.scene?.rootNode.addChildNode(descriptionTextNode)
-
-				demoSceneView = sceneView
-				if clickGesture == nil {
-					clickGesture = NSClickGestureRecognizer(target: sceneView, action: #selector(sceneView.handleClick(gesture:)))
-					sceneView.addGestureRecognizer(clickGesture ?? NSClickGestureRecognizer() )
-
-					sceneView.clickAction = { (results) in
-						self.processHitTestResults(results)
-					}
-				}
-
+				addAllImagesInMap(imageMap)
+				addTextNodes()
+				addClickRecognizer()
+			case .addMob:
+				addAllImagesInMap(imageMap)
+				addTextNodes()
+				addMob()
 			}
+		}
+
+		func addAllImagesInMap(_ imageMap: [(String, String)]) {
+			LogFunc()
+			for (index, map) in imageMap.enumerated() {
+				let image = Image.withName(map.1)
+				let imagePanel = ImagePanel(title: map.0, image: image, index: index)
+
+				let degreesFromCenter = degreesFromCenterForPanelIndex(index)
+				imagePanel.position = positionForDegreesFromCenter(degreesFromCenter, atRadius: panelBaseRadius)
+				imagePanel.eulerAngles.y = -degreesFromCenter * (.pi / 180.0)
+
+				demoSceneView?.scene?.rootNode.addChildNode(imagePanel)
+			}
+		}
+
+		func addClickRecognizer() {
+			LogFunc()
+
+			// ensure the click gesture recognizer is only added once
+			guard clickGesture == nil, let sceneView = demoSceneView else {
+				return
+			}
+
+			clickGesture = NSClickGestureRecognizer(target: sceneView, action: #selector(sceneView.handleClick(gesture:)))
+			sceneView.addGestureRecognizer(clickGesture ?? NSClickGestureRecognizer() )
+
+			sceneView.clickAction = { (results) in
+				self.processHitTestResults(results)
+			}
+		}
+
+		func addTextNodes() {
+			LogFunc()
+			let largeFontSize: CGFloat = 24
+			let smallFontSize: CGFloat = 14
+
+			let nameText = SCNText(string: "AltConf 2018", extrusionDepth: 2)
+			nameText.font = .systemFont(ofSize: largeFontSize)
+			nameText.materials = [SCNMaterial.white, SCNMaterial.white, SCNMaterial.black]	// front, back, extruded
+
+			let nameTextNode = SCNNode()
+			nameTextNode.geometry = nameText
+			nameTextNode.pivotAtCorner(.allCorners)
+			nameTextNode.position = positionForDegreesFromCenter(0, atRadius: 3, yOffset: -2)
+			nameTextNode.scale = SCNVector3(baseNodeScale, baseNodeScale, baseNodeScale)
+			nameTextNode.eulerAngles.x = -45 * (.pi / 180)
+
+			demoSceneView?.scene?.rootNode.addChildNode(nameTextNode)
+
+			let descriptionText = SCNText(string: "AR + SceneKit Tips and Tricks", extrusionDepth: 2)
+			descriptionText.font = .systemFont(ofSize: smallFontSize)
+			descriptionText.materials = [SCNMaterial.white, SCNMaterial.white, SCNMaterial.black]	// front, back, extruded
+
+			let descriptionTextNode = SCNNode()
+			descriptionTextNode.geometry = descriptionText
+			descriptionTextNode.pivotAtCorner(.allCorners)
+			descriptionTextNode.position = positionForDegreesFromCenter(0, atRadius: 2.8, yOffset: -2.5)
+			descriptionTextNode.scale = SCNVector3(baseNodeScale, baseNodeScale, baseNodeScale)
+			descriptionTextNode.eulerAngles.x = -45 * (.pi / 180)
+
+			demoSceneView?.scene?.rootNode.addChildNode(descriptionTextNode)
 		}
 
 		public func processHitTestResults(_ results: [SCNHitTestResult]) {
@@ -142,7 +162,7 @@ public extension Demos {
 			}
 		}
 
-		public func clickPanel(_ panel: ImagePanel) {
+		func clickPanel(_ panel: ImagePanel) {
 			LogFunc()
 
 			moveCurrentPanelBack()
@@ -225,6 +245,100 @@ public extension Demos {
 		func degreesFromCenterForPanelIndex(_ index: Int) -> CGFloat {
 			return ((CGFloat(index) - panelMidPoint) * panelSpacingDegrees)
 		}
+
+		func addMob() {
+			LogFunc()
+
+			guard let view = demoSceneView else {
+				return
+			}
+
+			
+			let scale: CGFloat = 0.01
+			let nodeScale = SCNVector3(scale, scale, scale)
+			let mobZLimit = panelBaseRadius
+			let mobZBaseRadius = panelBaseRadius * 4
+
+			let lowerRange = 15
+			let upperRange = 50
+			let randomMobCount = lowerRange + Int(arc4random_uniform(UInt32(upperRange - lowerRange)))
+
+			let angleLimit = 45
+			let positionXLimit = view.frame.size.width / 2
+			let positionYBase = -view.frame.size.height * 0.25
+			let positionYLimit = view.frame.size.height * 0.25
+
+			let personMaterial = SCNMaterial()
+			personMaterial.diffuse.contents = SKTexture(imageNamed: "user-blue")
+			personMaterial.transparent.contents = SKTexture(imageNamed: "user-blue")
+
+			(0..<randomMobCount).forEach({ index in
+
+				let randomX = (CGFloat(-positionXLimit / 2) + CGFloat(arc4random_uniform(UInt32(positionXLimit)))) * scale
+				let randomY = (CGFloat(-positionYLimit / 2) + CGFloat(arc4random_uniform(UInt32(positionYLimit))) + positionYBase) * scale
+				let randomZ = -(mobZBaseRadius - mobZLimit + CGFloat(arc4random_uniform(UInt32(mobZLimit * 2))))
+				let randomAngle = CGFloat(-angleLimit) + CGFloat(arc4random_uniform(UInt32(angleLimit * 2)))
+
+				let randomMaterial = SCNMaterial()
+				randomMaterial.diffuse.contents = personMaterial.diffuse.contents
+				randomMaterial.transparent.contents = personMaterial.transparent.contents
+				randomMaterial.transparency = alphaForZ(randomZ, baseRadius: mobZBaseRadius, zLimit: mobZLimit)
+
+				let personObject = SCNBox(width: 200, height: 200, length: 0, chamferRadius: 0)
+				personObject.materials = [personMaterial]
+				let personNode = SCNNode(geometry: personObject)
+				personNode.position = SCNVector3(randomX, randomY, randomZ)
+				personNode.eulerAngles.y = randomAngle * (.pi / 180.0)
+				personNode.scale = nodeScale
+				view.scene?.rootNode.addChildNode(personNode)
+
+				let randomZRange = CGFloat(arc4random_uniform(UInt32(mobZLimit)))
+				let randomZDirection = CGFloat(Bool.randomSign())
+				let randomZDuration = 5 + Double(arc4random_uniform(UInt32(15)))
+				var zFrom = -mobZBaseRadius - randomZRange * randomZDirection
+				var zTo = -mobZBaseRadius + randomZRange * randomZDirection
+
+				if Bool.random() {
+					let temp = zFrom
+					zFrom = zTo
+					zTo = temp
+				}
+
+				let animationZ = CABasicAnimation(keyPath: "position.z")
+				animationZ.fromValue = zFrom
+				animationZ.toValue = zTo
+				animationZ.duration = randomZDuration
+				animationZ.repeatCount = HUGE
+				animationZ.autoreverses = true
+				personNode.addAnimation(animationZ, forKey: "person move Z")
+
+				let animationAlpha = CABasicAnimation(keyPath: "geometry.firstMaterial.transparency")
+				animationAlpha.fromValue = alphaForZ(zFrom, baseRadius: mobZBaseRadius, zLimit: mobZLimit)
+				animationAlpha.toValue = alphaForZ(zTo, baseRadius: mobZBaseRadius, zLimit: mobZLimit)
+				animationAlpha.duration = randomZDuration
+				animationAlpha.repeatCount = HUGE
+				animationAlpha.autoreverses = true
+				personNode.addAnimation(animationAlpha, forKey: "person alpha")
+
+				let randomXRange = CGFloat(arc4random_uniform(UInt32(positionXLimit / 10)))
+				let randomXDirection = CGFloat(Bool.randomSign())
+				let randomXDuration = 7 + Double(arc4random_uniform(UInt32(20)))
+
+				let animationX = CABasicAnimation(keyPath: "position.x")
+				animationX.valueFunction = CAValueFunction(name: kCAValueFunctionTranslateX)
+				animationX.fromValue = -randomXRange * randomXDirection
+				animationX.toValue = randomXRange * randomXDirection
+				animationX.duration = randomXDuration
+				animationX.repeatCount = HUGE
+				animationX.autoreverses = true
+				personNode.addAnimation(animationX, forKey: "person move X")
+			})
+		}
+
+		func alphaForZ(_ z: CGFloat, baseRadius: CGFloat, zLimit: CGFloat) -> CGFloat {
+			return 1.0 - abs(-z - baseRadius - zLimit) / (zLimit * 2)
+		}
+
 
 	}
 

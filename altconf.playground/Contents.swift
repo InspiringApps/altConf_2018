@@ -31,7 +31,7 @@ enum DemoDriver {
 	case none
 }
 
-let currentDemo = DemoDriver.video(mode: .many)
+let currentDemo = DemoDriver.image(mode: .addMob)
 
 switch currentDemo {
 case .measure(let mode):
@@ -59,6 +59,6 @@ case .none:
 
 // text { oneBottomLeft, oneCentered, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle, addBlueMaterial, addSomeGray }
 
-// image { one, many }
+// image { one, many, addMob }
 // video { one, many }
 

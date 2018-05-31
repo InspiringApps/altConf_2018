@@ -77,13 +77,8 @@ extension Demos {
 			var tappedPanel: VideoPanel?
 
 			results.forEach({ hitResult in
-				if let geometry = hitResult.node.geometry,
-					let parent = hitResult.node.parent?.parent as? VideoPanel {
-					if let _ = geometry as? SCNPlane {
-						tappedPanel = parent
-					} else if let _ = geometry as? SCNBox {
-						tappedPanel = parent
-					}
+				if let videoNode = hitResult.node.ancestorOfClass(VideoPanel.self) as? VideoPanel {
+					tappedPanel = videoNode
 				}
 			})
 
@@ -103,10 +98,12 @@ extension Demos {
 				panel.closeActions.forEach({ nodeAction in
 					nodeAction.node.runAction(nodeAction.action)
 				})
+				panel.playbackLooped()
 			} else {
 				panel.openActions.forEach({ nodeAction in
 					nodeAction.node.runAction(nodeAction.action)
 				})
+				panel.playbackNormal()
 			}
 			panel.isOpen = !panel.isOpen
 		}
