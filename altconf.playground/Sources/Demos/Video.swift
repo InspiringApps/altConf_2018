@@ -77,7 +77,7 @@ extension Demos {
 			var tappedPanel: VideoPanel?
 
 			results.forEach({ hitResult in
-				if let videoNode = hitResult.node.ancestorOfClass(VideoPanel.self) as? VideoPanel {
+				if let videoNode = hitResult.node.ancestorOfClass(VideoPanel.self) {
 					tappedPanel = videoNode
 				}
 			})

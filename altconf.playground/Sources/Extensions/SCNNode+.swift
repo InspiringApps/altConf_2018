@@ -114,10 +114,10 @@ extension SCNNode {
 		return isChild
 	}
 
-	public func ancestorOfClass(_ nodeClass: SCNNode.Type) -> SCNNode? {
+	public func ancestorOfClass<T: SCNNode>(_ nodeClass: T.Type) -> T? {
 		if let parentNode = parent {
 			if type(of: parentNode) == nodeClass {
-				return parentNode
+				return parentNode as? T
 			} else {
 				return parentNode.ancestorOfClass(nodeClass)
 			}
