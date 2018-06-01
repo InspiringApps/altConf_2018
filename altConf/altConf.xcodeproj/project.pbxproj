@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA71C40520C127CE005318AB /* portal.scn in Resources */ = {isa = PBXBuildFile; fileRef = AA71C40420C127CE005318AB /* portal.scn */; };
 		AA87A1CF20B86B7C00CC282F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87A1CE20B86B7C00CC282F /* AppDelegate.swift */; };
 		AA87A1D120B86B7C00CC282F /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = AA87A1D020B86B7C00CC282F /* art.scnassets */; };
 		AA87A1D320B86B7C00CC282F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87A1D220B86B7C00CC282F /* ViewController.swift */; };
 		AA87A1D620B86B7C00CC282F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA87A1D420B86B7C00CC282F /* Main.storyboard */; };
 		AA87A1D820B86B7D00CC282F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA87A1D720B86B7D00CC282F /* Assets.xcassets */; };
 		AA87A1DB20B86B7D00CC282F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA87A1D920B86B7D00CC282F /* LaunchScreen.storyboard */; };
-		AA87A1E320B86BD200CC282F /* PostVisualizerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87A1E220B86BD200CC282F /* PostVisualizerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA71C40420C127CE005318AB /* portal.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = portal.scn; path = ../../altconf.playground/Resources/portal.scn; sourceTree = "<group>"; };
 		AA87A1CB20B86B7C00CC282F /* altConf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = altConf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA87A1CE20B86B7C00CC282F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA87A1D020B86B7C00CC282F /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -25,7 +26,6 @@
 		AA87A1D720B86B7D00CC282F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA87A1DA20B86B7D00CC282F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA87A1DC20B86B7D00CC282F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA87A1E220B86BD200CC282F /* PostVisualizerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVisualizerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +60,8 @@
 			children = (
 				AA87A1CE20B86B7C00CC282F /* AppDelegate.swift */,
 				AA87A1D020B86B7C00CC282F /* art.scnassets */,
-				AA87A1E220B86BD200CC282F /* PostVisualizerViewController.swift */,
 				AA87A1D220B86B7C00CC282F /* ViewController.swift */,
+				AA71C40420C127CE005318AB /* portal.scn */,
 				AA87A1D420B86B7C00CC282F /* Main.storyboard */,
 				AA87A1D720B86B7D00CC282F /* Assets.xcassets */,
 				AA87A1D920B86B7D00CC282F /* LaunchScreen.storyboard */,
@@ -129,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA87A1D120B86B7C00CC282F /* art.scnassets in Resources */,
+				AA71C40520C127CE005318AB /* portal.scn in Resources */,
 				AA87A1DB20B86B7D00CC282F /* LaunchScreen.storyboard in Resources */,
 				AA87A1D820B86B7D00CC282F /* Assets.xcassets in Resources */,
 				AA87A1D620B86B7C00CC282F /* Main.storyboard in Resources */,
@@ -142,7 +143,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA87A1E320B86BD200CC282F /* PostVisualizerViewController.swift in Sources */,
 				AA87A1D320B86B7C00CC282F /* ViewController.swift in Sources */,
 				AA87A1CF20B86B7C00CC282F /* AppDelegate.swift in Sources */,
 			);
@@ -289,7 +289,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3R85C7F8XA;
+				DEVELOPMENT_TEAM = 3J4WM73YC7;
 				INFOPLIST_FILE = altConf/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -307,7 +307,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3R85C7F8XA;
+				DEVELOPMENT_TEAM = 3J4WM73YC7;
 				INFOPLIST_FILE = altConf/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
