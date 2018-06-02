@@ -10,6 +10,7 @@ extension Demos {
 	public struct Measurement {
 
 		public enum DemoMode {
+//			case
 			case single, random, all
 		}
 
