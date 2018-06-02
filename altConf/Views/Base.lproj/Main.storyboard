@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OnT-sg-jfZ">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Demo View Controller-->
+        <scene sceneID="Ew6-Mr-NSO">
+            <objects>
+                <viewController id="OnT-sg-jfZ" customClass="DemoViewController" customModule="altConf" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NO7-ev-cSz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="altconf_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Kg-51-2ZE">
+                                <rect key="frame" x="20" y="-9" width="335" height="684"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3Kg-51-2ZE" firstAttribute="leading" secondItem="NO7-ev-cSz" secondAttribute="leading" constant="20" id="0kC-na-UJd"/>
+                            <constraint firstItem="3Kg-51-2ZE" firstAttribute="centerY" secondItem="NO7-ev-cSz" secondAttribute="centerY" id="CDq-yM-Hne"/>
+                            <constraint firstItem="3Kg-51-2ZE" firstAttribute="centerX" secondItem="NO7-ev-cSz" secondAttribute="centerX" id="J1v-pd-ATc"/>
+                            <constraint firstAttribute="trailing" secondItem="3Kg-51-2ZE" secondAttribute="trailing" constant="20" id="Utc-w9-JVn"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ipe-S8-Thi"/>
+                    </view>
+                    <connections>
+                        <outlet property="splashImage" destination="3Kg-51-2ZE" id="T1P-ui-7kx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uG0-gd-3Qn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-550" y="136"/>
+        </scene>
+        <!--Portal View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController storyboardIdentifier="PortalViewController" id="BV1-FR-VrT" customClass="PortalViewController" customModule="altConf" customModuleProvider="target" sceneMemberID="viewController">
+                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </arscnView>
+                    <connections>
+                        <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="295" y="135"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="altconf_logo.png" width="684" height="684"/>
+    </resources>
+</document>

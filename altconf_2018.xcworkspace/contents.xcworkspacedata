@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:altConf/altConf.xcodeproj">
+      location = "group:altconf.playground">
+   </FileRef>
+   <FileRef
+      location = "group:altConf.xcodeproj">
    </FileRef>
 </Workspace>
