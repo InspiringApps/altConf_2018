@@ -23,7 +23,7 @@ class DemoViewController: UIViewController {
 
 		fadeAway()
 
-		showDemo(.portal)
+		showDemo(.measure)
 	}
 
     override func didReceiveMemoryWarning() {
@@ -50,7 +50,8 @@ class DemoViewController: UIViewController {
 
 		switch demo {
 		case .measure:
-			break
+			let controller = storyboard.instantiateViewController(withIdentifier: "\(MeasuringViewController.self)")
+			present(controller, animated: true, completion: nil)
 		case .panels:
 			break
 		case .portal:

@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA27069B20C33FF500345667 /* MeasuringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27069A20C33FF500345667 /* MeasuringViewController.swift */; };
+		AA2706AB20C3420E00345667 /* WallPanelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706A320C3420D00345667 /* WallPanelNode.swift */; };
+		AA2706AC20C3420E00345667 /* Ruler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706A420C3420D00345667 /* Ruler.swift */; };
+		AA2706AD20C3420E00345667 /* SCNMaterial+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706A620C3420E00345667 /* SCNMaterial+.swift */; };
+		AA2706AE20C3420E00345667 /* SCNVector3+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706A720C3420E00345667 /* SCNVector3+.swift */; };
+		AA2706AF20C3420E00345667 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706A820C3420E00345667 /* Image.swift */; };
+		AA2706B020C3420E00345667 /* SCNNode+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706A920C3420E00345667 /* SCNNode+.swift */; };
+		AA2706B120C3420E00345667 /* Randomizers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706AA20C3420E00345667 /* Randomizers.swift */; };
+		AA2706B320C345EE00345667 /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706B220C345EE00345667 /* Collection+.swift */; };
+		AA2706B620C34A4600345667 /* VideoNode.scn in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B420C34A4500345667 /* VideoNode.scn */; };
+		AA2706B720C34A4600345667 /* ImagePanel.scn in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B520C34A4500345667 /* ImagePanel.scn */; };
+		AA2706BB20C34A5800345667 /* vid1_trimmed.mov in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B820C34A5300345667 /* vid1_trimmed.mov */; };
+		AA2706BC20C34A5800345667 /* vid3_trimmed.mov in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B920C34A5500345667 /* vid3_trimmed.mov */; };
+		AA2706BD20C34A5800345667 /* vid2_trimmed.mov in Resources */ = {isa = PBXBuildFile; fileRef = AA2706BA20C34A5800345667 /* vid2_trimmed.mov */; };
 		AAD7337A20C2B46F00B335F0 /* LogFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD7336B20C2B46F00B335F0 /* LogFunc.swift */; };
 		AAD7337C20C2B46F00B335F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD7336D20C2B46F00B335F0 /* AppDelegate.swift */; };
 		AAD7337D20C2B46F00B335F0 /* PortalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD7336F20C2B46F00B335F0 /* PortalViewController.swift */; };
@@ -19,6 +33,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA27069A20C33FF500345667 /* MeasuringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasuringViewController.swift; sourceTree = "<group>"; };
+		AA2706A320C3420D00345667 /* WallPanelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallPanelNode.swift; sourceTree = "<group>"; };
+		AA2706A420C3420D00345667 /* Ruler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ruler.swift; sourceTree = "<group>"; };
+		AA2706A620C3420E00345667 /* SCNMaterial+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNMaterial+.swift"; sourceTree = "<group>"; };
+		AA2706A720C3420E00345667 /* SCNVector3+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNVector3+.swift"; sourceTree = "<group>"; };
+		AA2706A820C3420E00345667 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		AA2706A920C3420E00345667 /* SCNNode+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNNode+.swift"; sourceTree = "<group>"; };
+		AA2706AA20C3420E00345667 /* Randomizers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizers.swift; sourceTree = "<group>"; };
+		AA2706B220C345EE00345667 /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
+		AA2706B420C34A4500345667 /* VideoNode.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = VideoNode.scn; sourceTree = "<group>"; };
+		AA2706B520C34A4500345667 /* ImagePanel.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ImagePanel.scn; sourceTree = "<group>"; };
+		AA2706B820C34A5300345667 /* vid1_trimmed.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = vid1_trimmed.mov; sourceTree = "<group>"; };
+		AA2706B920C34A5500345667 /* vid3_trimmed.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = vid3_trimmed.mov; sourceTree = "<group>"; };
+		AA2706BA20C34A5800345667 /* vid2_trimmed.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = vid2_trimmed.mov; sourceTree = "<group>"; };
 		AA87A1CB20B86B7C00CC282F /* altConf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = altConf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD7336B20C2B46F00B335F0 /* LogFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFunc.swift; sourceTree = "<group>"; };
 		AAD7336C20C2B46F00B335F0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -43,12 +71,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA2706A220C3420D00345667 /* ARObjects */ = {
+			isa = PBXGroup;
+			children = (
+				AA2706B520C34A4500345667 /* ImagePanel.scn */,
+				AA2706B420C34A4500345667 /* VideoNode.scn */,
+				AA2706A320C3420D00345667 /* WallPanelNode.swift */,
+				AA2706A420C3420D00345667 /* Ruler.swift */,
+			);
+			name = ARObjects;
+			path = altConf/ARObjects;
+			sourceTree = "<group>";
+		};
+		AA2706A520C3420D00345667 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AA2706B220C345EE00345667 /* Collection+.swift */,
+				AA2706A820C3420E00345667 /* Image.swift */,
+				AA2706AA20C3420E00345667 /* Randomizers.swift */,
+				AA2706A620C3420E00345667 /* SCNMaterial+.swift */,
+				AA2706A920C3420E00345667 /* SCNNode+.swift */,
+				AA2706A720C3420E00345667 /* SCNVector3+.swift */,
+			);
+			name = Extensions;
+			path = altConf/Extensions;
+			sourceTree = "<group>";
+		};
 		AA87A1C220B86B7C00CC282F = {
 			isa = PBXGroup;
 			children = (
 				AAD7336D20C2B46F00B335F0 /* AppDelegate.swift */,
 				AAD7336E20C2B46F00B335F0 /* ViewControllers */,
 				AAD7337120C2B46F00B335F0 /* Views */,
+				AA2706A220C3420D00345667 /* ARObjects */,
+				AA2706A520C3420D00345667 /* Extensions */,
 				AAD7337720C2B46F00B335F0 /* Resources */,
 				AAD7336A20C2B46F00B335F0 /* Support files */,
 				AA87A1CC20B86B7C00CC282F /* Products */,
@@ -78,6 +134,7 @@
 			children = (
 				AAD7337020C2B46F00B335F0 /* DemoViewController.swift */,
 				AAD7336F20C2B46F00B335F0 /* PortalViewController.swift */,
+				AA27069A20C33FF500345667 /* MeasuringViewController.swift */,
 			);
 			name = ViewControllers;
 			path = altConf/ViewControllers;
@@ -97,6 +154,9 @@
 		AAD7337720C2B46F00B335F0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AA2706B820C34A5300345667 /* vid1_trimmed.mov */,
+				AA2706BA20C34A5800345667 /* vid2_trimmed.mov */,
+				AA2706B920C34A5500345667 /* vid3_trimmed.mov */,
 				AAD7337820C2B46F00B335F0 /* Assets.xcassets */,
 				AAD7337920C2B46F00B335F0 /* art.scnassets */,
 			);
@@ -162,10 +222,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA2706BD20C34A5800345667 /* vid2_trimmed.mov in Resources */,
+				AA2706BC20C34A5800345667 /* vid3_trimmed.mov in Resources */,
 				AAD7338320C2B46F00B335F0 /* art.scnassets in Resources */,
+				AA2706B720C34A4600345667 /* ImagePanel.scn in Resources */,
 				AAD7338020C2B46F00B335F0 /* Main.storyboard in Resources */,
 				AAD7338220C2B46F00B335F0 /* Assets.xcassets in Resources */,
 				AAD7337F20C2B46F00B335F0 /* LaunchScreen.storyboard in Resources */,
+				AA2706BB20C34A5800345667 /* vid1_trimmed.mov in Resources */,
+				AA2706B620C34A4600345667 /* VideoNode.scn in Resources */,
 				AAD7338120C2B46F00B335F0 /* portal.scn in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,10 +242,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA2706AC20C3420E00345667 /* Ruler.swift in Sources */,
 				AAD7337C20C2B46F00B335F0 /* AppDelegate.swift in Sources */,
 				AAD7337D20C2B46F00B335F0 /* PortalViewController.swift in Sources */,
+				AA2706AE20C3420E00345667 /* SCNVector3+.swift in Sources */,
+				AA2706B320C345EE00345667 /* Collection+.swift in Sources */,
+				AA2706AD20C3420E00345667 /* SCNMaterial+.swift in Sources */,
+				AA2706AB20C3420E00345667 /* WallPanelNode.swift in Sources */,
+				AA2706B120C3420E00345667 /* Randomizers.swift in Sources */,
 				AAD7337A20C2B46F00B335F0 /* LogFunc.swift in Sources */,
 				AAD7337E20C2B46F00B335F0 /* DemoViewController.swift in Sources */,
+				AA2706B020C3420E00345667 /* SCNNode+.swift in Sources */,
+				AA27069B20C33FF500345667 /* MeasuringViewController.swift in Sources */,
+				AA2706AF20C3420E00345667 /* Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

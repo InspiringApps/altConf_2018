@@ -1,7 +1,7 @@
 import Foundation
-import AppKit
 
 #if os(OSX)
+import AppKit
 
 public typealias Image = NSImage
 extension Image {
@@ -36,6 +36,7 @@ extension Image {
 }
 
 #else
+import UIKit
 
 public typealias Image = UIImage
 extension Image {
