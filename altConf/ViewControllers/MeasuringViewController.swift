@@ -17,7 +17,7 @@ class MeasuringViewController: UIViewController, ARSCNViewDelegate, ARSessionDel
 	@IBAction func reset(_ sender: UIButton) {
 		LogFunc()
 
-		let alert = UIAlertController(title: "Reset?", message: "Are you sure you want to reset?", preferredStyle: .alert)
+		let alert = UIAlertController(title: "Reset?", message: "Remove wall panel and reset ruler?", preferredStyle: .alert)
 		let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
 			alert.dismiss(animated: true, completion: nil)
 		}
@@ -39,8 +39,6 @@ class MeasuringViewController: UIViewController, ARSCNViewDelegate, ARSessionDel
 	var currentPanel: WallPanelNode?
 	var currentSegmentLength = 0.0
 	var segmentStartValue = SCNVector3Zero
-
-	var wallHeight = 2.44 // 8 feet - AR units are in meters
 
 	let resultTypes: ARHitTestResult.ResultType = [.estimatedHorizontalPlane, .estimatedVerticalPlane]
 	var rulerResultType: ARHitTestResult.ResultType?
@@ -119,8 +117,8 @@ class MeasuringViewController: UIViewController, ARSCNViewDelegate, ARSessionDel
 					ruler.measureTo(SCNVector3(worldTransform: result.worldTransform))
 					trackMovementToScreenPoint(tapPoint)
 
-					showStatus("Measured length: \(ruler.measurement * 100 / 2.54 / 12)")
-					showWallSegmentLength()
+					showStatus("Measured length: \(ruler.lengthInUnit(.feet))")
+					totalWidthLabel.text = ruler.lengthInUnit(.feet)
 					currentSegmentLength = 0
 					currentPanel = nil
 				}
@@ -141,7 +139,7 @@ class MeasuringViewController: UIViewController, ARSCNViewDelegate, ARSessionDel
 
 		ruler.resetAt(segmentStartValue)
 		instructionsLabel.text = "Tap for new segment"
-		showWallSegmentLength()
+		totalWidthLabel.text = ruler.lengthInUnit(.feet)
 	}
 
 	func session(_ session: ARSession, didUpdate frame: ARFrame) {
@@ -177,11 +175,6 @@ class MeasuringViewController: UIViewController, ARSCNViewDelegate, ARSessionDel
 			}) { (completed) in
 			}
 		}
-	}
-
-	func showWallSegmentLength() {
-		LogFunc()
-		totalWidthLabel.text = "\(currentSegmentLength) ft"
 	}
 
 	func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {

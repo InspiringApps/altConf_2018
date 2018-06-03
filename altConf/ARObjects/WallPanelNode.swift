@@ -20,8 +20,8 @@ class WallPanelNode: SCNNode {
 		material.isDoubleSided = true
 
 		pane.materials = [material]
-		pane.height = 8
-		pane.width = 2
+		pane.height = 2.44 // 8 feet - AR units are in meters
+		pane.width = 1
 
 		originalPosition = placement
 

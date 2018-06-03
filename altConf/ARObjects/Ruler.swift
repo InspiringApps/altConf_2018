@@ -5,6 +5,13 @@
 import Foundation
 import SceneKit
 
+public enum Units: String {
+	case inches = "in"
+	case feet = "ft"
+	case meters = "m"
+	case centimeters = "cm"
+}
+
 class Ruler: SCNNode {
 
 	enum MeasurementMode {
@@ -49,7 +56,7 @@ class Ruler: SCNNode {
 		let constrainedEnd: SCNVector3
 		switch measurementMode {
 		case .horizontal:
-			constrainedEnd = SCNVector3(end.x, end.y, end.z)
+			constrainedEnd = SCNVector3(end.x, startPoint.y, end.z)
 		case .vertical:
 			constrainedEnd = SCNVector3(startPoint.x, end.y, end.z)
 		}
@@ -78,12 +85,23 @@ class Ruler: SCNNode {
 		eulerAngles.y = yaw
 		eulerAngles.z = 0
 	}
-}
 
-func + (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
-	return SCNVector3Make(left.x + right.x, left.y + right.y, left.z + right.z)
-}
+	public func lengthInUnit(_ unit: Units) -> String {
 
-func - (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
-	return SCNVector3Make(left.x - right.x, left.y - right.y, left.z - right.z)
+		let value: CGFloat
+		switch unit {
+		case .feet:
+			value = measurement / 0.3048
+		case .inches:
+			value = measurement / 0.0254
+		case .centimeters:
+			value = measurement * 100
+		case .meters:
+			value = measurement
+		}
+
+		// format to one decimal place
+		return "\((value * 10).rounded() / 10.0) \(unit.rawValue)"
+	}
+
 }
