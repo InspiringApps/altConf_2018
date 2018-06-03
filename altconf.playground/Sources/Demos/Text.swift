@@ -23,6 +23,7 @@ extension Demos {
 			var titleTextNode = SCNNode()
 			var panelNode = SCNNode()
 
+			// TODO: move this function outside of its parent function
 			func addNodeForText(_ text: String, withPivotCorner corner: RectCorner, index: Int, materials: [SCNMaterial] = [SCNMaterial.white]) {
 
 				let panelGeometry = SCNBox(width: 20, height: 30, length: 1, chamferRadius: 3)
@@ -43,20 +44,22 @@ extension Demos {
 				titleTextNode.position = SCNVector3(0, floor((panelGeometry.height - headerHeight) / 2), panelGeometry.length / 2 + 0.01)
 				panelNode.addChildNode(titleTextNode)
 
-				let tagText = SCNText(string: text, extrusionDepth: 0.3 * CGFloat(materials.count))	// make text thicker to make extruded surface easier to see
-				tagText.isWrapped = true
-				tagText.containerFrame = CGRect(origin: .zero, size: CGSize(width: placeholderGeometry.width, height: placeholderGeometry.height))
-				tagText.font = NSFont(name: "Helvetica", size: 2)
-				tagText.materials = materials	// order of elements in materials array matter. Refer to documentation for each geometry type
+				// for demo purposes, make the text thicker when we're showing multiple meaterials
+				// to make the extruded surface easier to see
+				let panelText = SCNText(string: text, extrusionDepth: 0.3 * CGFloat(materials.count))
+				panelText.isWrapped = true
+				panelText.containerFrame = CGRect(origin: .zero, size: CGSize(width: placeholderGeometry.width, height: placeholderGeometry.height))
+				panelText.font = NSFont(name: "Helvetica", size: 2)
+				panelText.materials = materials	// the order of the elements in the materials array matter. Refer to documentation for each geometry type
 
-				let tagTextNode = SCNNode(geometry: tagText)
-				tagTextNode.position = SCNVector3(0, 0, 1)
-				panelNode.addChildNode(tagTextNode)
+				let panelTextNode = SCNNode(geometry: panelText)
+				panelTextNode.position = SCNVector3(0, 0, 1)
+				panelNode.addChildNode(panelTextNode)
 
 				// move text forward to make backside easier to see
 				let hoverDistance = CGFloat(1 + ((materials.count - 1) * 2))
 
-				tagTextNode.alignToPlaceholder(placeholderNode, atCorner: corner, hoverDistance: hoverDistance, showPivotWithColor: .red)
+				panelTextNode.alignToPlaceholder(placeholderNode, atCorner: corner, hoverDistance: hoverDistance, showPivotWithColor: .red)
 
 				sceneView.scene?.rootNode.addChildNode(panelNode)
 			}

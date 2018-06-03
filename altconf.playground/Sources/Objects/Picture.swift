@@ -20,7 +20,7 @@ public class PictureNode: SCNNode {
 		material.isDoubleSided = true
 		pane.materials = [material]
 
-		pane.height = 8 * 0.3048
+		pane.height = 8 * 0.3048 // 8 ft converted to meters, the AR scene measurment unit
 		pane.width = 0
 
 		geometry = pane
