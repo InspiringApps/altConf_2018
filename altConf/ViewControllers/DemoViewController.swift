@@ -33,7 +33,7 @@ class DemoViewController: UIViewController {
 
 	func fadeAway() {
 		LogFunc()
-		UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+		UIView.animate(withDuration: 0.75, delay: 0, options: .curveEaseIn, animations: {
 			self.splashImage.alpha = 0
 			self.splashImage.transform = CGAffineTransform(scaleX: 0.2, y: 0.2).rotated(by: 90 * .pi / 180)
 			self.view.backgroundColor = .black
@@ -59,7 +59,5 @@ class DemoViewController: UIViewController {
 			present(controller, animated: true, completion: nil)
 		}
 	}
-
-
 
 }

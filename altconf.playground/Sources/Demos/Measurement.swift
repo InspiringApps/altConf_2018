@@ -10,8 +10,7 @@ extension Demos {
 	public struct Measurement {
 
 		public enum DemoMode {
-//			case
-			case single, random, all
+			case one, random, many
 		}
 
 		public static func runwithView(_ sceneView: ARView, mode: DemoMode) {
@@ -65,12 +64,12 @@ extension Demos {
 			]
 
 			switch mode {
-			case .single:
+			case .one:
 				addRulerTo(points[0])
 			case .random:
 				let point = points[Int(arc4random_uniform(UInt32(points.count - 1)))]
 				addRulerTo(point)
-			case .all:
+			case .many:
 				points.forEach({ addRulerTo($0) })
 			}
 		}

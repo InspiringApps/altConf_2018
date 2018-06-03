@@ -126,7 +126,10 @@ extension SCNNode {
 	}
 
 	public func showPivot(_ color: NSColor = .red) {
+		// attempt to find a reasonable size for the pivot node based on the size and scale of this node
 		let primarySize = max(0.1, ((boundingBox.max.x - boundingBox.min.x) + (boundingBox.max.y - boundingBox.min.y)) / 2)
+		// arbritrarily divide by a factor to get a reasonable size. A node of radically differnt size or scale
+		// might require a different adjustment
 		let dotSize = CGFloat(primarySize / 30)
 		let materialColor = SCNMaterial()
 		materialColor.diffuse.contents = color
@@ -136,7 +139,6 @@ extension SCNNode {
 		dotNode.position.x = self.pivot.m41
 		dotNode.position.y = self.pivot.m42
 		dotNode.position.z = 0
-//		dotNode.scale = self.scale
 		addChildNode(dotNode)
 	}
 
