@@ -28,7 +28,6 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 // video { one, many }
 */ /* end cheat sheet */
 
-
 enum DemoDriver {
 	case measure(mode: Demos.Measurement.DemoMode)
 	case text(mode: Demos.Text.DemoMode)
@@ -39,10 +38,8 @@ enum DemoDriver {
 
 let currentDemo = DemoDriver.image(mode: .many)
 
-
 switch currentDemo {
 case .measure(let mode):
-	sceneView.debugOptions = .showCameras
 	cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
 	Demos.Measurement.runwithView(sceneView, mode: mode)
 case .text(let mode):
@@ -63,7 +60,6 @@ case .none:
 }
 
 cameraNode.look(at: SCNVector3(x: 0, y: 0, z: 0))
-
 
 /*
 SCNPlane, SCNBox, SCNSphere, SCNPyramid, SCNCone, SCNCylinder, SCNCapsule, SCNTube, SCNTorus
