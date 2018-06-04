@@ -6,24 +6,23 @@ import UIKit
 import SceneKit
 import ARKit
 
-class PanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+class ImagePanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
 	@IBOutlet var sceneView: ARSCNView!
 
 	let session = ARSession()
 
-	enum DemoMode {
-		case images, video
-	}
-
+	let minimumPanelRadius: Float = 1.0
 	let panelAnimationDuration = 1.0
 	let baseNodeScale: CGFloat = 0.02
+
+	let nameTextNode = SCNNode()
+	let descriptionTextNode = SCNNode()
 
 	var currentPanel: ImagePanel?
 	var panelBaseRadius: Float = 0
 	var panelMidPoint: Float = 0
 	var panelSpacingDegrees: Float = 0
-	let minimumPanelRadius: Float = 1.0
 
 	override func viewDidLoad() {
 		LogFunc()
@@ -123,7 +122,6 @@ class PanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionDelega
 		nameText.font = .systemFont(ofSize: largeFontSize)
 		nameText.materials = [SCNMaterial.white, SCNMaterial.white, SCNMaterial.black]	// front, back, extruded
 
-		let nameTextNode = SCNNode()
 		nameTextNode.geometry = nameText
 		nameTextNode.pivotAtCorner(.allCorners)
 		nameTextNode.position = positionForDegreesFromCenter(0, atRadius: panelBaseRadius * 0.9, yOffset: -2)
@@ -136,7 +134,6 @@ class PanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionDelega
 		descriptionText.font = .systemFont(ofSize: smallFontSize)
 		descriptionText.materials = [SCNMaterial.white, SCNMaterial.white, SCNMaterial.black]	// front, back, extruded
 
-		let descriptionTextNode = SCNNode()
 		descriptionTextNode.geometry = descriptionText
 		descriptionTextNode.pivotAtCorner(.allCorners)
 		descriptionTextNode.position = positionForDegreesFromCenter(0, atRadius: panelBaseRadius * 0.8, yOffset: -2.5)
@@ -185,7 +182,7 @@ class PanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionDelega
 				panel.imageNode.scale = SCNVector3(initialScale, initialScale, initialScale)
 				panel.imageNode.geometry = cylinder
 
-				panel.imageNode.animateRotationByRadians((90 + 180) * .pi / 180, withDuration: self.panelAnimationDuration)
+				panel.imageNode.animateRotationByRadians(180 * .pi / 180, withDuration: self.panelAnimationDuration)
 				panel.imageNode.animateToScale(SCNVector3Make(1, 1, 1), withDuration: self.panelAnimationDuration * 2)
 			})
 		}
@@ -317,6 +314,33 @@ class PanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionDelega
 	func alphaForZ(_ z: Float, baseRadius: Float, zLimit: Float) -> CGFloat {
 		return CGFloat(1.0 - abs(-z - baseRadius - zLimit) / (zLimit * 2))
 	}
+
+	// MARK: - ARSessionDelegate
+	func session(_ session: ARSession, didUpdate frame: ARFrame) {
+
+		let cameraAngle = frame.camera.eulerAngles.y
+		nameTextNode.position = positionForRadiansFromCenter(cameraAngle, atRadius: panelBaseRadius * 0.9, yOffset: nameTextNode.position.y)
+		descriptionTextNode.position = positionForRadiansFromCenter(cameraAngle, atRadius: panelBaseRadius * 0.8, yOffset: descriptionTextNode.position.y)
+
+		nameTextNode.eulerAngles.y = cameraAngle
+		descriptionTextNode.eulerAngles.y = cameraAngle
+	}
+
+	func session(_ session: ARSession, didFailWithError error: Error) {
+		LogFunc()
+		// Present an error message to the user
+	}
+
+	func sessionWasInterrupted(_ session: ARSession) {
+		LogFunc()
+		// Inform the user that the session has been interrupted, for example, by presenting an overlay
+	}
+
+	func sessionInterruptionEnded(_ session: ARSession) {
+		LogFunc()
+		// Reset tracking and/or remove existing anchors if consistent tracking is required
+	}
+
 
 }
 

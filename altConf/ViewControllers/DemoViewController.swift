@@ -9,7 +9,7 @@ class DemoViewController: UIViewController {
 	@IBOutlet weak var splashImage: UIImageView!
 
 	enum DemoViews {
-		case measure, panels, portal
+		case measure, imagePanels, videoPanels, portal
 	}
 
 	override func viewDidLoad() {
@@ -22,8 +22,7 @@ class DemoViewController: UIViewController {
 		super.viewDidAppear(animated)
 
 		fadeAway()
-
-		showDemo(.panels)
+		showDemo(.videoPanels)
 	}
 
     override func didReceiveMemoryWarning() {
@@ -53,8 +52,10 @@ class DemoViewController: UIViewController {
 		switch demo {
 		case .measure:
 			controllerClassName = "\(MeasuringViewController.self)"
-		case .panels:
-			controllerClassName = "\(PanelsViewController.self)"
+		case .imagePanels:
+			controllerClassName = "\(ImagePanelsViewController.self)"
+		case .videoPanels:
+			controllerClassName = "\(VideoBoxesViewController.self)"
 		case .portal:
 			controllerClassName = "\(PortalViewController.self)"
 		}

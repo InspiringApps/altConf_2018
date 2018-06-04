@@ -55,10 +55,10 @@
             </objects>
             <point key="canvasLocation" x="916" y="134"/>
         </scene>
-        <!--Panels View Controller-->
+        <!--Image Panels View Controller-->
         <scene sceneID="kv8-WF-DTh">
             <objects>
-                <viewController storyboardIdentifier="PanelsViewController" id="SX3-RN-WUy" customClass="PanelsViewController" customModule="altConf" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PanelsViewController" id="SX3-RN-WUy" customClass="ImagePanelsViewController" customModule="altConf" customModuleProvider="target" sceneMemberID="viewController">
                     <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8u8-sa-W7Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -70,6 +70,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FB1-qz-m88" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1642" y="134"/>
+        </scene>
+        <!--Video Boxes View Controller-->
+        <scene sceneID="8AP-te-yPk">
+            <objects>
+                <viewController storyboardIdentifier="VideoBoxesViewController" id="Ie3-Ks-yMc" customClass="VideoBoxesViewController" customModule="altConf" customModuleProvider="target" sceneMemberID="viewController">
+                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8UZ-XC-1qA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </arscnView>
+                    <connections>
+                        <outlet property="sceneView" destination="8UZ-XC-1qA" id="zK6-IB-f5h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="odW-6m-Cw2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2415" y="135"/>
         </scene>
         <!--Measuring View Controller-->
         <scene sceneID="BOC-YS-i8D">

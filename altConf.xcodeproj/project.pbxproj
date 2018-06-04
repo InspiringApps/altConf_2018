@@ -21,6 +21,8 @@
 		AA2706BB20C34A5800345667 /* vid1_trimmed.mov in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B820C34A5300345667 /* vid1_trimmed.mov */; };
 		AA2706BC20C34A5800345667 /* vid3_trimmed.mov in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B920C34A5500345667 /* vid3_trimmed.mov */; };
 		AA2706BD20C34A5800345667 /* vid2_trimmed.mov in Resources */ = {isa = PBXBuildFile; fileRef = AA2706BA20C34A5800345667 /* vid2_trimmed.mov */; };
+		AA50F5FC20C521E40045F199 /* VideoBoxesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50F5FB20C521E40045F199 /* VideoBoxesViewController.swift */; };
+		AA50F5FE20C5295E0045F199 /* VideoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50F5FD20C5295E0045F199 /* VideoNode.swift */; };
 		AAD7337A20C2B46F00B335F0 /* LogFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD7336B20C2B46F00B335F0 /* LogFunc.swift */; };
 		AAD7337C20C2B46F00B335F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD7336D20C2B46F00B335F0 /* AppDelegate.swift */; };
 		AAD7337D20C2B46F00B335F0 /* PortalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD7336F20C2B46F00B335F0 /* PortalViewController.swift */; };
@@ -30,7 +32,7 @@
 		AAD7338120C2B46F00B335F0 /* portal.scn in Resources */ = {isa = PBXBuildFile; fileRef = AAD7337620C2B46F00B335F0 /* portal.scn */; };
 		AAD7338220C2B46F00B335F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD7337820C2B46F00B335F0 /* Assets.xcassets */; };
 		AAD7338320C2B46F00B335F0 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD7337920C2B46F00B335F0 /* art.scnassets */; };
-		AADBA90C20C45F8500243B78 /* PanelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADBA90B20C45F8500243B78 /* PanelsViewController.swift */; };
+		AADBA90C20C45F8500243B78 /* ImagePanelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADBA90B20C45F8500243B78 /* ImagePanelsViewController.swift */; };
 		AADBA90E20C4624F00243B78 /* ImagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADBA90D20C4624F00243B78 /* ImagePanel.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +51,8 @@
 		AA2706B820C34A5300345667 /* vid1_trimmed.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = vid1_trimmed.mov; sourceTree = "<group>"; };
 		AA2706B920C34A5500345667 /* vid3_trimmed.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = vid3_trimmed.mov; sourceTree = "<group>"; };
 		AA2706BA20C34A5800345667 /* vid2_trimmed.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = vid2_trimmed.mov; sourceTree = "<group>"; };
+		AA50F5FB20C521E40045F199 /* VideoBoxesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBoxesViewController.swift; sourceTree = "<group>"; };
+		AA50F5FD20C5295E0045F199 /* VideoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNode.swift; sourceTree = "<group>"; };
 		AA87A1CB20B86B7C00CC282F /* altConf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = altConf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD7336B20C2B46F00B335F0 /* LogFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFunc.swift; sourceTree = "<group>"; };
 		AAD7336C20C2B46F00B335F0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,7 +64,7 @@
 		AAD7337620C2B46F00B335F0 /* portal.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = portal.scn; sourceTree = "<group>"; };
 		AAD7337820C2B46F00B335F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAD7337920C2B46F00B335F0 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		AADBA90B20C45F8500243B78 /* PanelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsViewController.swift; sourceTree = "<group>"; };
+		AADBA90B20C45F8500243B78 /* ImagePanelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePanelsViewController.swift; sourceTree = "<group>"; };
 		AADBA90D20C4624F00243B78 /* ImagePanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,11 +82,12 @@
 		AA2706A220C3420D00345667 /* ARObjects */ = {
 			isa = PBXGroup;
 			children = (
-				AADBA90D20C4624F00243B78 /* ImagePanel.swift */,
 				AA2706B520C34A4500345667 /* ImagePanel.scn */,
-				AA2706B420C34A4500345667 /* VideoNode.scn */,
-				AA2706A320C3420D00345667 /* WallPanelNode.swift */,
+				AADBA90D20C4624F00243B78 /* ImagePanel.swift */,
 				AA2706A420C3420D00345667 /* Ruler.swift */,
+				AA2706B420C34A4500345667 /* VideoNode.scn */,
+				AA50F5FD20C5295E0045F199 /* VideoNode.swift */,
+				AA2706A320C3420D00345667 /* WallPanelNode.swift */,
 			);
 			name = ARObjects;
 			path = altConf/ARObjects;
@@ -138,9 +143,10 @@
 			isa = PBXGroup;
 			children = (
 				AAD7337020C2B46F00B335F0 /* DemoViewController.swift */,
-				AAD7336F20C2B46F00B335F0 /* PortalViewController.swift */,
+				AADBA90B20C45F8500243B78 /* ImagePanelsViewController.swift */,
 				AA27069A20C33FF500345667 /* MeasuringViewController.swift */,
-				AADBA90B20C45F8500243B78 /* PanelsViewController.swift */,
+				AAD7336F20C2B46F00B335F0 /* PortalViewController.swift */,
+				AA50F5FB20C521E40045F199 /* VideoBoxesViewController.swift */,
 			);
 			name = ViewControllers;
 			path = altConf/ViewControllers;
@@ -248,10 +254,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA50F5FC20C521E40045F199 /* VideoBoxesViewController.swift in Sources */,
 				AA2706AC20C3420E00345667 /* Ruler.swift in Sources */,
 				AAD7337C20C2B46F00B335F0 /* AppDelegate.swift in Sources */,
 				AAD7337D20C2B46F00B335F0 /* PortalViewController.swift in Sources */,
-				AADBA90C20C45F8500243B78 /* PanelsViewController.swift in Sources */,
+				AADBA90C20C45F8500243B78 /* ImagePanelsViewController.swift in Sources */,
 				AA2706AE20C3420E00345667 /* SCNVector3+.swift in Sources */,
 				AA2706B320C345EE00345667 /* Collection+.swift in Sources */,
 				AA2706AD20C3420E00345667 /* SCNMaterial+.swift in Sources */,
@@ -262,6 +269,7 @@
 				AA2706B020C3420E00345667 /* SCNNode+.swift in Sources */,
 				AADBA90E20C4624F00243B78 /* ImagePanel.swift in Sources */,
 				AA27069B20C33FF500345667 /* MeasuringViewController.swift in Sources */,
+				AA50F5FE20C5295E0045F199 /* VideoNode.swift in Sources */,
 				AA2706AF20C3420E00345667 /* Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
