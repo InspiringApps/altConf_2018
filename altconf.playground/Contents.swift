@@ -1,5 +1,9 @@
 //: A Cocoa based Playground to play with SceneKit
 
+// Note: for demo putposes, this main content page only sets up and chooses which demo to run.
+// All functional code is in the "Sources" subfolder.
+// In actual development, you want to minimize or eliminate the sources module, and do as much on this page as possible.
+
 // panel to image morph
 
 import AppKit
@@ -17,6 +21,13 @@ let cameraNode = SCNNode()
 cameraNode.camera = SCNCamera()
 sceneView.scene?.rootNode.addChildNode(cameraNode)
 
+/*   Begin cheat sheet
+// measure { one, random, many }
+// text { oneBottomLeft, oneCentered, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle, addBlueMaterial, addSomeGray }
+// image { one, many, addMob }
+// video { one, many }
+*/ /* end cheat sheet */
+
 
 enum DemoDriver {
 	case measure(mode: Demos.Measurement.DemoMode)
@@ -26,7 +37,8 @@ enum DemoDriver {
 	case none
 }
 
-let currentDemo = DemoDriver.none
+let currentDemo = DemoDriver.image(mode: .many)
+
 
 switch currentDemo {
 case .measure(let mode):
@@ -41,7 +53,7 @@ case .image(let mode):
 	let imageDemo = Demos.Images()
 	imageDemo.runwithView(sceneView, mode: mode)
 //	sceneView.debugOptions = .showBoundingBoxes
-//	imageDemo.hitTestNaive = false
+	imageDemo.hitTestNaive = false
 case .video(let mode):
 	cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
 	let videoDemo = Demos.Video()
@@ -52,45 +64,10 @@ case .none:
 
 cameraNode.look(at: SCNVector3(x: 0, y: 0, z: 0))
 
-let node = SCNNode()
-sceneView.scene?.rootNode.addChildNode(node)
-
-let box = SCNBox(width: 2, height: 2, length: 1, chamferRadius: 0.25)
-node.geometry = box
-
-box.materials = [
-	SCNMaterial.green,
-	SCNMaterial.red,
-	SCNMaterial.yellow,
-	SCNMaterial.black
-]
-
-let ball = SCNNode(geometry: SCNSphere(radius: 1))
-ball.geometry?.materials = [SCNMaterial.blue]
-ball.position = SCNVector3(1, 1, -1)
-sceneView.scene?.rootNode.addChildNode(ball)
-
-let ball2 = SCNNode(geometry: SCNSphere(radius: 0.5))
-ball2.geometry?.materials = [SCNMaterial.white]
-ball2.position = SCNVector3(1, 2, -2)
-sceneView.scene?.rootNode.addChildNode(ball2)
-
-let container = SCNNode()
-container.addChildNode(node)
-container.addChildNode(ball)
-sceneView.scene?.rootNode.addChildNode(container)
-
-sceneView.debugOptions = [.showCameras, .showBoundingBoxes]
-
-sceneView.makeRotatable(container)
 
 /*
 SCNPlane, SCNBox, SCNSphere, SCNPyramid, SCNCone, SCNCylinder, SCNCapsule, SCNTube, SCNTorus
 SCNText, SCNShape
 */
 
-// measure { single, random, all }
-// text { oneBottomLeft, oneCentered, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle, addBlueMaterial, addSomeGray }
-// image { one, many, addMob }
-// video { one, many }
 
