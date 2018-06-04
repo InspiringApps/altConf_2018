@@ -53,7 +53,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1870" y="135"/>
+            <point key="canvasLocation" x="916" y="134"/>
+        </scene>
+        <!--Panels View Controller-->
+        <scene sceneID="kv8-WF-DTh">
+            <objects>
+                <viewController storyboardIdentifier="PanelsViewController" id="SX3-RN-WUy" customClass="PanelsViewController" customModule="altConf" customModuleProvider="target" sceneMemberID="viewController">
+                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8u8-sa-W7Q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </arscnView>
+                    <connections>
+                        <outlet property="sceneView" destination="8u8-sa-W7Q" id="76S-1R-71g"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FB1-qz-m88" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1642" y="134"/>
         </scene>
         <!--Measuring View Controller-->
         <scene sceneID="BOC-YS-i8D">
@@ -184,7 +200,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ktM-4Z-fRV" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="257" y="135"/>
+            <point key="canvasLocation" x="177" y="135"/>
         </scene>
     </scenes>
     <resources>

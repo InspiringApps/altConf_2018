@@ -23,7 +23,7 @@ class DemoViewController: UIViewController {
 
 		fadeAway()
 
-		showDemo(.measure)
+		showDemo(.panels)
 	}
 
     override func didReceiveMemoryWarning() {
@@ -48,16 +48,19 @@ class DemoViewController: UIViewController {
 			fatalError("No storyboard! weird...")
 		}
 
+		let controllerClassName: String
+
 		switch demo {
 		case .measure:
-			let controller = storyboard.instantiateViewController(withIdentifier: "\(MeasuringViewController.self)")
-			present(controller, animated: true, completion: nil)
+			controllerClassName = "\(MeasuringViewController.self)"
 		case .panels:
-			break
+			controllerClassName = "\(PanelsViewController.self)"
 		case .portal:
-			let controller = storyboard.instantiateViewController(withIdentifier: "\(PortalViewController.self)")
-			present(controller, animated: true, completion: nil)
+			controllerClassName = "\(PortalViewController.self)"
 		}
+
+		let controller = storyboard.instantiateViewController(withIdentifier: controllerClassName)
+		present(controller, animated: true, completion: nil)
 	}
 
 }

@@ -28,13 +28,10 @@ class Ruler: SCNNode {
 	private var startPoint = SCNVector3Zero
 	private var endPoint = SCNVector3Zero
 	private let capsule = SCNCapsule()
-	private let radius: CGFloat = 0.005
-	private let rulerMaterial = SCNMaterial()
 
 	override init() {
-		rulerMaterial.diffuse.contents = UIColor.green
-		capsule.capRadius = radius
-		capsule.materials = [rulerMaterial]
+		capsule.capRadius =  0.005
+		capsule.materials = [SCNMaterial.green]
 		super.init()
 		geometry = capsule
 	}
