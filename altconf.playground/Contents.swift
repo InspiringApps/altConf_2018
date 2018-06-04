@@ -36,7 +36,7 @@ enum DemoDriver {
 	case none
 }
 
-let currentDemo = DemoDriver.image(mode: .many)
+let currentDemo = DemoDriver.video(mode: .one)
 
 switch currentDemo {
 case .measure(let mode):
@@ -52,7 +52,7 @@ case .image(let mode):
 //	sceneView.debugOptions = .showBoundingBoxes
 	imageDemo.hitTestNaive = false
 case .video(let mode):
-	cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
+	cameraNode.position = SCNVector3(x: 0, y: 0, z: 3)
 	let videoDemo = Demos.Video()
 	videoDemo.runwithView(sceneView, mode: mode)
 case .none:

@@ -63,13 +63,25 @@ public class VideoPanel: SCNNode {
 		super.init(coder: aDecoder)
 	}
 
+	private var playerItemDurationToken: NSKeyValueObservation?
+
 	public func playbackLooped() {
 		LogFunc()
 
 		guard let item = videoPlayer.currentItem else {
 			return
 		}
+
 		let fullDuration = item.duration
+
+		guard !CMTIME_IS_INDEFINITE(fullDuration) else {
+			// item isn't fully loaded yet. Set uo key-value observing so we try again when it is.
+			playerItemDurationToken = item.observe(\.duration) { [weak self] object, change in
+				self?.playbackLooped()
+			}
+			return
+		}
+
 		let sliceStart = CMTimeMultiplyByFloat64(fullDuration, 0.25)
 		let sliceEnd = CMTimeAdd(sliceStart, CMTime(seconds: 4, preferredTimescale: fullDuration.timescale))
 

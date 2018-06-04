@@ -45,7 +45,7 @@ extension Demos {
 				let videoNode = VideoPanel(title: videoMap[0].0, videoFile: videoMap[0].1, index: 0)
 				videoNode.position = positionForDegreesFromCenter(0, atRadius: panelBaseRadius)
 				sceneView.scene?.rootNode.addChildNode(videoNode)
-
+				sceneView.makeRotatable(videoNode)
 			case .many:
 				for (index, map) in videoMap.enumerated() {
 					let videoNode = VideoPanel(title: map.0, videoFile: map.1, index: index)
