@@ -8,7 +8,19 @@ class DemoViewController: UIViewController {
 
 	@IBOutlet weak var splashImage: UIImageView!
 
-	enum DemoViews {
+	@IBAction func chooseDemo(_ sender: UISegmentedControl) {
+		LogFunc()
+
+		guard sender.selectedSegmentIndex > 0 else {
+			return
+		}
+
+		if let demo = DemoViews(rawValue: sender.selectedSegmentIndex - 1) {
+			showDemo(demo)
+		}
+	}
+	
+	enum DemoViews: Int {
 		case measure, imagePanels, videoPanels, portal
 	}
 
@@ -20,9 +32,7 @@ class DemoViewController: UIViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		LogFunc()
 		super.viewDidAppear(animated)
-
 		fadeAway()
-		showDemo(.videoPanels)
 	}
 
     override func didReceiveMemoryWarning() {

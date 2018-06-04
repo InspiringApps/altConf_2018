@@ -21,13 +21,29 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="altconf_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Kg-51-2ZE">
                                 <rect key="frame" x="20" y="-9" width="335" height="684"/>
                             </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Jrn-nZ-lsT">
+                                <rect key="frame" x="5" y="634" width="365" height="29"/>
+                                <segments>
+                                    <segment title="Off"/>
+                                    <segment title="Measure"/>
+                                    <segment title="Images"/>
+                                    <segment title="Video"/>
+                                    <segment title="Portal"/>
+                                </segments>
+                                <connections>
+                                    <action selector="chooseDemo:" destination="OnT-sg-jfZ" eventType="valueChanged" id="l0b-bp-PU3"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3Kg-51-2ZE" firstAttribute="leading" secondItem="NO7-ev-cSz" secondAttribute="leading" constant="20" id="0kC-na-UJd"/>
                             <constraint firstItem="3Kg-51-2ZE" firstAttribute="centerY" secondItem="NO7-ev-cSz" secondAttribute="centerY" id="CDq-yM-Hne"/>
+                            <constraint firstItem="ipe-S8-Thi" firstAttribute="trailing" secondItem="Jrn-nZ-lsT" secondAttribute="trailing" constant="5" id="IgL-mX-wR7"/>
                             <constraint firstItem="3Kg-51-2ZE" firstAttribute="centerX" secondItem="NO7-ev-cSz" secondAttribute="centerX" id="J1v-pd-ATc"/>
                             <constraint firstAttribute="trailing" secondItem="3Kg-51-2ZE" secondAttribute="trailing" constant="20" id="Utc-w9-JVn"/>
+                            <constraint firstItem="Jrn-nZ-lsT" firstAttribute="leading" secondItem="ipe-S8-Thi" secondAttribute="leading" constant="5" id="kFM-ut-1AM"/>
+                            <constraint firstItem="ipe-S8-Thi" firstAttribute="bottom" secondItem="Jrn-nZ-lsT" secondAttribute="bottom" constant="5" id="kv0-YD-uRE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ipe-S8-Thi"/>
                     </view>
@@ -37,7 +53,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uG0-gd-3Qn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-550" y="136"/>
+            <point key="canvasLocation" x="-551.20000000000005" y="135.38230884557723"/>
         </scene>
         <!--Portal View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -53,12 +69,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="916" y="134"/>
+            <point key="canvasLocation" x="898" y="-288"/>
         </scene>
         <!--Image Panels View Controller-->
         <scene sceneID="kv8-WF-DTh">
             <objects>
-                <viewController storyboardIdentifier="PanelsViewController" id="SX3-RN-WUy" customClass="ImagePanelsViewController" customModule="altConf" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagePanelsViewController" id="SX3-RN-WUy" customClass="ImagePanelsViewController" customModule="altConf" customModuleProvider="target" sceneMemberID="viewController">
                     <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8u8-sa-W7Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -69,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FB1-qz-m88" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1642" y="134"/>
+            <point key="canvasLocation" x="158" y="427"/>
         </scene>
         <!--Video Boxes View Controller-->
         <scene sceneID="8AP-te-yPk">
@@ -85,7 +101,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="odW-6m-Cw2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2415" y="135"/>
+            <point key="canvasLocation" x="898" y="426"/>
         </scene>
         <!--Measuring View Controller-->
         <scene sceneID="BOC-YS-i8D">
@@ -216,7 +232,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ktM-4Z-fRV" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="177" y="135"/>
+            <point key="canvasLocation" x="159" y="-287"/>
         </scene>
     </scenes>
     <resources>
