@@ -7,26 +7,12 @@ import UIKit
 class DemoViewController: UIViewController {
 
 	@IBOutlet weak var splashImage: UIImageView!
-
-	@IBAction func chooseDemo(_ sender: UISegmentedControl) {
-		LogFunc()
-
-		guard sender.selectedSegmentIndex > 0 else {
-			return
-		}
-
-		if let demo = DemoViews(rawValue: sender.selectedSegmentIndex - 1) {
-			showDemo(demo)
-		}
-	}
-	
-	enum DemoViews: Int {
-		case measure, imagePanels, videoPanels, portal
-	}
+	@IBOutlet weak var infoView: UIView!
 
 	override func viewDidLoad() {
 		LogFunc()
         super.viewDidLoad()
+		reset()
     }
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -35,10 +21,25 @@ class DemoViewController: UIViewController {
 		fadeAway()
 	}
 
+	override func viewDidDisappear(_ animated: Bool) {
+		LogFunc()
+		super.viewDidDisappear(animated)
+		reset()
+	}
+
     override func didReceiveMemoryWarning() {
 		LogFunc()
         super.didReceiveMemoryWarning()
     }
+
+	func reset() {
+		LogFunc()
+		self.splashImage.alpha = 1
+		self.splashImage.transform = CGAffineTransform.identity
+		self.view.backgroundColor = .darkGray
+		self.infoView.alpha = 0
+		self.infoView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+	}
 
 	func fadeAway() {
 		LogFunc()
@@ -47,31 +48,16 @@ class DemoViewController: UIViewController {
 			self.splashImage.transform = CGAffineTransform(scaleX: 0.2, y: 0.2).rotated(by: 90 * .pi / 180)
 			self.view.backgroundColor = .black
 		}) { (completed) in
+			self.fadeIn()
 		}
 	}
 
-	func showDemo(_ demo: DemoViews) {
+	func fadeIn() {
 		LogFunc()
-
-		guard let storyboard = self.storyboard  else {
-			fatalError("No storyboard! weird...")
+		UIView.animate(withDuration: 0.75, delay: 0, options: .curveEaseIn, animations: {
+			self.infoView.alpha = 1
+			self.infoView.transform = CGAffineTransform.identity
+		}) { (completed) in
 		}
-
-		let controllerClassName: String
-
-		switch demo {
-		case .measure:
-			controllerClassName = "\(MeasuringViewController.self)"
-		case .imagePanels:
-			controllerClassName = "\(ImagePanelsViewController.self)"
-		case .videoPanels:
-			controllerClassName = "\(VideoBoxesViewController.self)"
-		case .portal:
-			controllerClassName = "\(PortalViewController.self)"
-		}
-
-		let controller = storyboard.instantiateViewController(withIdentifier: controllerClassName)
-		present(controller, animated: true, completion: nil)
 	}
-
 }
