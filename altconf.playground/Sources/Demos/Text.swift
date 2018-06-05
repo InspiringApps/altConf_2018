@@ -10,7 +10,7 @@ extension Demos {
 	public struct Text {
 
 		public enum DemoMode {
-			case oneBottomLeft, oneCentered, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle
+			case oneBottomLeft, oneCentered, manyCentered, manyBottomLeft, sphericalTitle
 			case addBlueMaterial, addSomeGray
 		}
 
@@ -70,12 +70,12 @@ extension Demos {
 				panelNode.showPivot()
 			case .oneCentered:
 				addNodeForText(String(text.prefix(150)), withPivotCorner: .allCorners, index: 1)
-			case .varyLengthsCentered:
+			case .manyCentered:
 				let corner = RectCorner.allCorners
 				addNodeForText(String(text.prefix(15)), withPivotCorner: corner, index: 0)
 				addNodeForText(String(text.prefix(100)), withPivotCorner: corner, index: 1)
 				addNodeForText(String(text.prefix(1500)), withPivotCorner: corner, index: 2)
-			case .varyLengthsBottomLeft:
+			case .manyBottomLeft:
 				let corner = RectCorner.bottomLeft
 				addNodeForText(String(text.prefix(15)), withPivotCorner: corner, index: 0)
 				addNodeForText(String(text.prefix(100)), withPivotCorner: corner, index: 1)

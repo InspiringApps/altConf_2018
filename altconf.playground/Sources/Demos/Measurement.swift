@@ -51,6 +51,17 @@ extension Demos {
 				lengthTextNode.rotation = pane.rotation
 				lengthTextNode.scale = SCNVector3(0.5, 0.5, 0.5)
 				sceneView.scene?.rootNode.addChildNode(lengthTextNode)
+
+				let pointText = SCNText(string: "{\(endPoint.x), \(endPoint.y), \(endPoint.z)}", extrusionDepth: 0.1)
+				pointText.font = NSFont(name: "Helvetica", size: 0.75)
+				pointText.materials = [SCNMaterial.black]
+
+				let pointTextNode = SCNNode(geometry: pointText)
+				pointTextNode.position = endPoint
+				pointTextNode.position.y -= 0.5
+				pointTextNode.rotation = pane.rotation
+				pointTextNode.scale = SCNVector3(0.5, 0.5, 0.5)
+				sceneView.scene?.rootNode.addChildNode(pointTextNode)
 			}
 
 			let points = [
@@ -58,8 +69,6 @@ extension Demos {
 				SCNVector3(-2, 2, -3),
 				SCNVector3(6, 2, -3),
 				SCNVector3(-2, 3, 3),
-				SCNVector3(1.5, -2, 1),
-				SCNVector3(2, 2, 2),
 				SCNVector3(-2, -2.2, 1)
 			]
 

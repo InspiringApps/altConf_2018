@@ -24,26 +24,38 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="altconf_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Kg-51-2ZE">
                                 <rect key="frame" x="20" y="-9" width="335" height="684"/>
                             </imageView>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7r-Qc-xlz">
-                                <rect key="frame" x="0.0" y="233" width="375" height="200"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7r-Qc-xlz">
+                                <rect key="frame" x="0.0" y="226" width="375" height="295"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="VN2-em-SZG">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="VN2-em-SZG">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="295"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="altConf 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NaF-OK-jkp">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="42"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="36"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AR+SceneKit Tips and Tricks" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RZ6-m0-XwS">
-                                                <rect key="frame" x="0.0" y="63" width="375" height="105.5"/>
+                                                <rect key="frame" x="0.0" y="72" width="375" height="70"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://github.com/erwinmaza/altConf_2018" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtd-iP-fyE">
-                                                <rect key="frame" x="0.0" y="168.5" width="375" height="31.5"/>
+                                                <rect key="frame" x="0.0" y="172" width="375" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Erwin Mazariegos" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfh-Vo-e1X">
+                                                <rect key="frame" x="0.0" y="223" width="375" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InspiringApps.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UmV-k6-zmE">
+                                                <rect key="frame" x="0.0" y="274" width="375" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -51,13 +63,12 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="VN2-em-SZG" secondAttribute="trailing" id="F9I-lq-uMN"/>
                                     <constraint firstAttribute="bottom" secondItem="VN2-em-SZG" secondAttribute="bottom" id="g9K-3Y-awH"/>
                                     <constraint firstItem="VN2-em-SZG" firstAttribute="top" secondItem="Z7r-Qc-xlz" secondAttribute="top" id="gkI-Oh-kIV"/>
                                     <constraint firstItem="VN2-em-SZG" firstAttribute="leading" secondItem="Z7r-Qc-xlz" secondAttribute="leading" id="uTE-uz-lLp"/>
-                                    <constraint firstAttribute="height" constant="200" id="unL-u5-gFZ"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -72,7 +83,7 @@
                             <constraint firstItem="fAe-0x-Dcy" firstAttribute="top" secondItem="NO7-ev-cSz" secondAttribute="top" id="UFX-Fh-LCT"/>
                             <constraint firstAttribute="trailing" secondItem="3Kg-51-2ZE" secondAttribute="trailing" constant="20" id="Utc-w9-JVn"/>
                             <constraint firstItem="fAe-0x-Dcy" firstAttribute="trailing" secondItem="ipe-S8-Thi" secondAttribute="trailing" id="bV6-ba-deh"/>
-                            <constraint firstItem="Z7r-Qc-xlz" firstAttribute="centerY" secondItem="NO7-ev-cSz" secondAttribute="centerY" id="l43-Pp-x3d"/>
+                            <constraint firstItem="Z7r-Qc-xlz" firstAttribute="centerY" secondItem="NO7-ev-cSz" secondAttribute="centerY" constant="40" id="l43-Pp-x3d"/>
                             <constraint firstItem="Z7r-Qc-xlz" firstAttribute="leading" secondItem="ipe-S8-Thi" secondAttribute="leading" id="qc2-Ve-LHb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ipe-S8-Thi"/>
@@ -286,6 +297,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="hwf-av-0ej" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" itemPositioning="centered" id="dYC-er-NLg">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

@@ -14,7 +14,7 @@ public class ARView: SCNView {
 	var rotateNode = false {
 		didSet {
 			if rotateNode {
-				backgroundColor = .clear
+				backgroundColor = .black
 				allowsCameraControl = false
 				rotationGesture?.isEnabled = true
 			} else {

@@ -1,12 +1,7 @@
-//: A Cocoa based Playground to play with SceneKit
-
-// Note: for demo putposes, this main content page only sets up and chooses which demo to run.
+// Note: for demo purposes, this main content page only sets up and chooses which demo to run.
 // All functional code is in the "Sources" subfolder.
 // In actual development, you want to minimize or eliminate the sources module, and do as much on this page as possible.
 
-// panel to image morph
-
-import AppKit
 import PlaygroundSupport
 import SceneKit
 import SpriteKit
@@ -23,7 +18,7 @@ sceneView.scene?.rootNode.addChildNode(cameraNode)
 
 /*   Begin cheat sheet
 // measure { one, random, many }
-// text { oneBottomLeft, oneCentered, varyLengthsCentered, varyLengthsBottomLeft, sphericalTitle, addBlueMaterial, addSomeGray }
+// text { oneBottomLeft, oneCentered, manyCentered, manyBottomLeft, sphericalTitle, addBlueMaterial, addSomeGray }
 // image { one, many, addMob }
 // video { one, many }
 */ /* end cheat sheet */
@@ -36,11 +31,11 @@ enum DemoDriver {
 	case none
 }
 
-let currentDemo = DemoDriver.video(mode: .one)
+let currentDemo = DemoDriver.none
 
 switch currentDemo {
 case .measure(let mode):
-	cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
+	cameraNode.position = SCNVector3(x: 0, y: 0, z: 17)
 	Demos.Measurement.runwithView(sceneView, mode: mode)
 case .text(let mode):
 	cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
@@ -56,14 +51,16 @@ case .video(let mode):
 	let videoDemo = Demos.Video()
 	videoDemo.runwithView(sceneView, mode: mode)
 case .none:
-	cameraNode.position = SCNVector3(x: 0, y: 10, z: 10)
+	cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
+
+
+
+
+
+
+
 }
 
 cameraNode.look(at: SCNVector3(x: 0, y: 0, z: 0))
-
-/*
-SCNPlane, SCNBox, SCNSphere, SCNPyramid, SCNCone, SCNCylinder, SCNCapsule, SCNTube, SCNTorus
-SCNText, SCNShape
-*/
 
 
