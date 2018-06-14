@@ -143,14 +143,14 @@ So far I’ve rendered all this in code. But just like working with UIkit, you c
 
 **Tip 15:** absolutely use the scene editor for more complex node structures, especially when working with lighting!
 
-Yeah, unless you’ve blueprinted you scene already, do not try to position spotlights by working in code. The tweaks will take you forever. However, scene editor doesn’t connect to your code like interface builder does via IBOutlets and IBActions. The code in this demo project shows you how to do that manually, and I wish I had time to show you now.
+Yeah, unless you’ve blueprinted your scene already, do not try to position spotlights by working in code. The tweaks will take you forever. However, scene editor doesn’t connect to your code like interface builder does via IBOutlets and IBActions. The code in this demo project shows you how to do that manually, and I wish I had time to show you now.
 
 (Build and Run)
 Let’s see this in action in the app.
 
 Wait, who invited those guys? They seem to be just randomly milling about. But it’s cool, they’re just there to demonstrate how to use Core Animation to add some randomness to your scene. You know, just for fun.
 
-Ok, you’l notice the text stays fixed in front of us as we move the phone around. This can’t be worked on in the playgoing, so 
+Ok, you’ll notice the text stays fixed in front of us as we move the phone around. This can’t be worked on in the playgoing, so 
 
 **Tip 16 is:** use a real device for AR integration Ok, that’s really obvious, so let’s pretend I never said that.
 
@@ -162,7 +162,7 @@ Ok, you’l notice the text stays fixed in front of us as we move the phone arou
 
 In Scene editor you can add one action on each node, for example the “open” action, then as you grab a reference to it in code, you can create the corresponding “close” action by reversing it.
 
-I’ve listed 17 tips in this talk. This scene also demonstrates the one trick: the invisible box. There are 3 parts to this trick: double sided walls, and “almost” transparent outer wall, and an inner wall the is rendered “after” the outer wall.
+I’ve listed 17 tips in this talk. This scene also demonstrates the one trick: the invisible box. There are 3 parts to this trick: double sided walls, and “almost” transparent outer wall, and an inner wall that is rendered “after” the outer wall.
 
 Ok, I think my time is up. So just for fun, let’s look at that last tab in the demo app, where I took that one trick and went a little nuts with it
 
