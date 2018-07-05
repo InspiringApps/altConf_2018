@@ -69,7 +69,7 @@ public class VideoPanel: SCNNode {
 			return
 		}
 		let fullDuration = item.duration
-		let sliceStart = CMTimeMultiplyByFloat64(fullDuration, 0.25)
+		let sliceStart = CMTimeMultiplyByFloat64(fullDuration, multiplier: 0.25)
 		let sliceEnd = CMTimeAdd(sliceStart, CMTime(seconds: 4, preferredTimescale: fullDuration.timescale))
 
 		// different behavior on different platforms ¯\_(ツ)_/¯

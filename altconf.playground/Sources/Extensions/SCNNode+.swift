@@ -147,11 +147,11 @@ extension SCNNode {
 
 		if let geometry = self.geometry as? SCNText, let text = geometry.string as? String {
 
-			let textString = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: geometry.font])
+			let textString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: geometry.font])
 			var containerSize = geometry.containerFrame.size
 
 			if containerSize == .zero {
-				let textString = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: geometry.font])
+				let textString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: geometry.font])
 				containerSize = textString.boundingRect(with: geometry.containerFrame.size, options: .usesLineFragmentOrigin, context: nil).size
 
 			}

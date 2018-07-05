@@ -7,6 +7,8 @@ import Foundation
 // Thus, we need to declare everything we intend to access as 'public'
 
 public struct Demos {
-	// this is an empty struct. The actual demos are extensions of the Demos struct
+	// this is an empty struct.
+	// The actual demos are extensions of this struct, organized in separate files in this folder
 }
+
 

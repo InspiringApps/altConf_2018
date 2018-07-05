@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </containerView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="altconf_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Kg-51-2ZE">
-                                <rect key="frame" x="20" y="-9" width="335" height="684"/>
+                                <rect key="frame" x="20" y="-8.5" width="335" height="684"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7r-Qc-xlz">
                                 <rect key="frame" x="0.0" y="226" width="375" height="295"/>
@@ -42,7 +42,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://github.com/erwinmaza/altConf_2018" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtd-iP-fyE">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="github.com/InspiringApps/altConf_2018" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtd-iP-fyE">
                                                 <rect key="frame" x="0.0" y="172" width="375" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -253,9 +253,8 @@
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tracking: Normal" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QD4-oQ-3V9">
-                                <rect key="frame" x="0.0" y="610" width="375" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tracking: Normal" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QD4-oQ-3V9">
+                                <rect key="frame" x="0.0" y="596.5" width="375" height="21.5"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -265,11 +264,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="7xk-q4-GG3" firstAttribute="top" secondItem="pIm-Qf-XwY" secondAttribute="bottom" constant="20" id="3lC-J5-Kg1"/>
+                            <constraint firstItem="QD4-oQ-3V9" firstAttribute="leading" secondItem="2nw-C1-SdA" secondAttribute="leading" id="Blk-iM-K2d"/>
                             <constraint firstItem="6bZ-zp-oWI" firstAttribute="top" secondItem="2nw-C1-SdA" secondAttribute="top" id="JwI-d8-6Bn"/>
                             <constraint firstItem="2nw-C1-SdA" firstAttribute="trailing" secondItem="6bZ-zp-oWI" secondAttribute="trailing" id="KAQ-DS-PEC"/>
+                            <constraint firstItem="2nw-C1-SdA" firstAttribute="bottom" secondItem="QD4-oQ-3V9" secondAttribute="bottom" id="LrW-cL-eaQ"/>
                             <constraint firstItem="2nw-C1-SdA" firstAttribute="trailing" secondItem="7xk-q4-GG3" secondAttribute="trailing" id="M1F-X1-IYf"/>
                             <constraint firstItem="6bZ-zp-oWI" firstAttribute="leading" secondItem="2nw-C1-SdA" secondAttribute="leading" id="VWE-aI-5Om"/>
                             <constraint firstItem="pIm-Qf-XwY" firstAttribute="trailing" secondItem="2nw-C1-SdA" secondAttribute="trailing" id="cyS-NC-GSB"/>
+                            <constraint firstItem="QD4-oQ-3V9" firstAttribute="trailing" secondItem="2nw-C1-SdA" secondAttribute="trailing" id="hW3-JZ-JSd"/>
                             <constraint firstItem="2nw-C1-SdA" firstAttribute="bottom" secondItem="6bZ-zp-oWI" secondAttribute="bottom" id="j65-CO-eYe"/>
                             <constraint firstItem="pIm-Qf-XwY" firstAttribute="top" secondItem="2nw-C1-SdA" secondAttribute="top" id="jbb-GO-1r8"/>
                             <constraint firstItem="pIm-Qf-XwY" firstAttribute="leading" secondItem="2nw-C1-SdA" secondAttribute="leading" id="kR5-ZX-TEb"/>

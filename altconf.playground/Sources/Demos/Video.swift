@@ -68,7 +68,7 @@ extension Demos {
 			}
 
 			demoSceneView = sceneView
-			sceneView.scene?.isPaused = true	// prevent actions from running prematurely
+			sceneView.scene?.isPaused = true		// prevent actions from running prematurely
 		}
 
 		public func processHitTestResults(_ results: [SCNHitTestResult]) {

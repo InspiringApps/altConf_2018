@@ -122,7 +122,7 @@ public class ARView: SCNView {
 	@objc
 	func handleDoubleClick(gesture: NSClickGestureRecognizer) {
 		LogFunc()
-		// propery has a didSet function defined
+		// property has a didSet function defined
 		rotateNode = !rotateNode
 	}
 

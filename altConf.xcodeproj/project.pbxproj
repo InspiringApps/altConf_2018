@@ -15,7 +15,6 @@
 		AA2706AF20C3420E00345667 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706A820C3420E00345667 /* Image.swift */; };
 		AA2706B020C3420E00345667 /* SCNNode+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706A920C3420E00345667 /* SCNNode+.swift */; };
 		AA2706B120C3420E00345667 /* Randomizers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706AA20C3420E00345667 /* Randomizers.swift */; };
-		AA2706B320C345EE00345667 /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2706B220C345EE00345667 /* Collection+.swift */; };
 		AA2706B620C34A4600345667 /* VideoNode.scn in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B420C34A4500345667 /* VideoNode.scn */; };
 		AA2706B720C34A4600345667 /* ImagePanel.scn in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B520C34A4500345667 /* ImagePanel.scn */; };
 		AA2706BB20C34A5800345667 /* vid1_trimmed.mov in Resources */ = {isa = PBXBuildFile; fileRef = AA2706B820C34A5300345667 /* vid1_trimmed.mov */; };
@@ -34,6 +33,7 @@
 		AAD7338320C2B46F00B335F0 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD7337920C2B46F00B335F0 /* art.scnassets */; };
 		AADBA90C20C45F8500243B78 /* ImagePanelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADBA90B20C45F8500243B78 /* ImagePanelsViewController.swift */; };
 		AADBA90E20C4624F00243B78 /* ImagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADBA90D20C4624F00243B78 /* ImagePanel.swift */; };
+		AAF5B1F920E293B40079AE1D /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF5B1F820E293B40079AE1D /* Collection+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +45,6 @@
 		AA2706A820C3420E00345667 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		AA2706A920C3420E00345667 /* SCNNode+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNNode+.swift"; sourceTree = "<group>"; };
 		AA2706AA20C3420E00345667 /* Randomizers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizers.swift; sourceTree = "<group>"; };
-		AA2706B220C345EE00345667 /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		AA2706B420C34A4500345667 /* VideoNode.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = VideoNode.scn; sourceTree = "<group>"; };
 		AA2706B520C34A4500345667 /* ImagePanel.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ImagePanel.scn; sourceTree = "<group>"; };
 		AA2706B820C34A5300345667 /* vid1_trimmed.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = vid1_trimmed.mov; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 		AAD7337920C2B46F00B335F0 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		AADBA90B20C45F8500243B78 /* ImagePanelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePanelsViewController.swift; sourceTree = "<group>"; };
 		AADBA90D20C4624F00243B78 /* ImagePanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePanel.swift; sourceTree = "<group>"; };
+		AAF5B1F820E293B40079AE1D /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 		AA2706A520C3420D00345667 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				AA2706B220C345EE00345667 /* Collection+.swift */,
+				AAF5B1F820E293B40079AE1D /* Collection+.swift */,
 				AA2706A820C3420E00345667 /* Image.swift */,
 				AA2706AA20C3420E00345667 /* Randomizers.swift */,
 				AA2706A620C3420E00345667 /* SCNMaterial+.swift */,
@@ -257,10 +257,10 @@
 				AA50F5FC20C521E40045F199 /* VideoBoxesViewController.swift in Sources */,
 				AA2706AC20C3420E00345667 /* Ruler.swift in Sources */,
 				AAD7337C20C2B46F00B335F0 /* AppDelegate.swift in Sources */,
+				AAF5B1F920E293B40079AE1D /* Collection+.swift in Sources */,
 				AAD7337D20C2B46F00B335F0 /* PortalViewController.swift in Sources */,
 				AADBA90C20C45F8500243B78 /* ImagePanelsViewController.swift in Sources */,
 				AA2706AE20C3420E00345667 /* SCNVector3+.swift in Sources */,
-				AA2706B320C345EE00345667 /* Collection+.swift in Sources */,
 				AA2706AD20C3420E00345667 /* SCNMaterial+.swift in Sources */,
 				AA2706AB20C3420E00345667 /* WallPanelNode.swift in Sources */,
 				AA2706B120C3420E00345667 /* Randomizers.swift in Sources */,

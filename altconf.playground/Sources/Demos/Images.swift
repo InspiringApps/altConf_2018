@@ -15,6 +15,7 @@ public extension Demos {
 
 		public var hitTestNaive = true
 
+		
 		let panelAnimationDuration = 1.0
 		let baseNodeScale: CGFloat = 0.02
 
@@ -325,7 +326,7 @@ public extension Demos {
 				let randomXDuration = 7 + Double(arc4random_uniform(UInt32(20)))
 
 				let animationX = CABasicAnimation(keyPath: "position.x")
-				animationX.valueFunction = CAValueFunction(name: kCAValueFunctionTranslateX)
+				animationX.valueFunction = CAValueFunction(name: CAValueFunctionName.translateX)
 				animationX.fromValue = -randomXRange * randomXDirection
 				animationX.toValue = randomXRange * randomXDirection
 				animationX.duration = randomXDuration
