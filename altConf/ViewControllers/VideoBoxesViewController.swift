@@ -39,6 +39,7 @@ class VideoBoxesViewController: UIViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		LogFunc()
 		super.viewWillDisappear(animated)
+		removeAll()
 		sceneView.session.pause()
 	}
 
@@ -80,7 +81,7 @@ class VideoBoxesViewController: UIViewController {
 
 		panelSpacingDegrees = 180.0 / Float(videoMap.count)
 		panelMidPoint = 0.5 * Float(videoMap.count - 1)
-		panelBaseRadius = max(minimumPanelRadius, Float(videoMap.count) * 1.6)
+		panelBaseRadius = max(minimumPanelRadius, Float(videoMap.count) * 2)
 
 		for (index, map) in videoMap.enumerated() {
 			let videoNode = VideoPanel(title: map.0, videoFile: map.1, index: index)
@@ -93,6 +94,11 @@ class VideoBoxesViewController: UIViewController {
 		}
 
 		sceneView.scene.isPaused = true	// prevent actions from running prematurely
+	}
+
+	func removeAll() {
+		LogFunc()
+		sceneView.scene.rootNode.childNodes.forEach({ $0.removeFromParentNode() })
 	}
 
 	func tapPanel(_ panel: VideoPanel) {

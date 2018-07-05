@@ -51,6 +51,7 @@ class ImagePanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionD
 	override func viewWillDisappear(_ animated: Bool) {
 		LogFunc()
 		super.viewWillDisappear(animated)
+		removeAll()
 		sceneView.session.pause()
 	}
 
@@ -113,6 +114,11 @@ class ImagePanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionD
 		}
 	}
 
+	func removeAll() {
+		LogFunc()
+		sceneView.scene.rootNode.childNodes.forEach({ $0.removeFromParentNode() })
+	}
+
 	func addTextNodes() {
 		LogFunc()
 		let largeFontSize: CGFloat = 24
@@ -121,6 +127,7 @@ class ImagePanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionD
 		let nameText = SCNText(string: "AltConf 2018", extrusionDepth: 2)
 		nameText.font = .systemFont(ofSize: largeFontSize)
 		nameText.materials = [SCNMaterial.white, SCNMaterial.white, SCNMaterial.black]	// front, back, extruded
+		nameText.materials[0].lightingModel = .constant
 
 		nameTextNode.geometry = nameText
 		nameTextNode.pivotAtCorner(.allCorners)
@@ -133,6 +140,7 @@ class ImagePanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionD
 		let descriptionText = SCNText(string: "AR + SceneKit Tips and Tricks", extrusionDepth: 2)
 		descriptionText.font = .systemFont(ofSize: smallFontSize)
 		descriptionText.materials = [SCNMaterial.white, SCNMaterial.white, SCNMaterial.black]	// front, back, extruded
+		descriptionText.materials[0].lightingModel = .constant
 
 		descriptionTextNode.geometry = descriptionText
 		descriptionTextNode.pivotAtCorner(.allCorners)
@@ -168,7 +176,7 @@ class ImagePanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionD
 			imageMaterial.lightingModel = .constant	// so we don't have to point a light at it to see it
 			imageMaterial.isDoubleSided = true
 
-			let cylinderRadius: CGFloat = image.size.width * baseNodeScale / 3
+			let cylinderRadius: CGFloat = image.size.width * baseNodeScale / 2
 			let cylinder = SCNCylinder(radius: cylinderRadius, height: image.size.height * baseNodeScale)
 			cylinder.materials = [imageMaterial, SCNMaterial.clear, SCNMaterial.clear]
 
@@ -183,7 +191,7 @@ class ImagePanelsViewController: UIViewController, ARSCNViewDelegate, ARSessionD
 				panel.imageNode.geometry = cylinder
 
 				panel.imageNode.animateRotationByRadians(180 * .pi / 180, withDuration: self.panelAnimationDuration)
-				panel.imageNode.animateToScale(SCNVector3Make(1, 1, 1), withDuration: self.panelAnimationDuration * 2)
+				panel.imageNode.animateToScale(SCNVector3Make(0.15, 0.15, 0.15), withDuration: self.panelAnimationDuration * 2)
 			})
 		}
 	}
